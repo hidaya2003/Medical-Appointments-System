@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>إضافة تعليق</title>
+    
+        <!-- الخط المستخدم -->
+        <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    
+        <!-- رابط مكتبة Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+       
+        <!-- ملف التنسيقات العامة -->
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="darkmode.css" />
+        <link rel="shortcut icon" href="icon-192.png" type="image/png">
+
+</head>
+
+<body>
+   
+  <div class="sidebar">
+    <div class="sidebar-image" id="sidebar-image">
+        <img src="stethoscope-removebg-preview.png" alt="Doctor" />
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html" > <span> الرئيسية</span><i class="fas fa-home"></i></a></li>
+      <li id="aboutLink" style="display:none;">
+          <a href="about.html"><span>معلومات عنا</span><i class="fas fa-info-circle"></i></a></li>            
+      <li><a href="contact.html"><span>اتصل بنا</span><i class="fas fa-phone"></i></a></li>
+      <li id="facilityContactLink" style="display:none;">
+          <a href="facility-contact.html"><span>اتصل بالمؤسسة</span><i class="fas fa-hospital"></i></a></li>
+      <li><a href="feedback.html" class="active"><span>إضافة تعليق</span><i class="fas fa-comment-dots"></i></a></li>
+      <li><a href="settings.html"><span>إعدادات الموقع</span><i class="fas fa-cogs"></i></a></li>
+      <li><a href="help.html"><span>المساعدة</span><i class="fas fa-question-circle"></i></a></li>
+  </ul>
+</div>
+
+  <div class="comment-section">
+    <h2 class="comment-title">
+      <i class="fas fa-comment-dots"></i>
+      إضافة تعليق
+    </h2>
+
+    <form class="comment-form" onsubmit="submitComment(event)">
+      <div class="form-group">
+        <label for="name">الاسم</label>
+        <input type="text" id="name" placeholder="اسمك (اختياري)">
+      </div>
+
+      <div class="form-group">
+        <label for="rating">التقييم</label>
+        <select id="rating" required>
+          <option value="">اختر تقييماً</option>
+          <option value="5">5 - ممتاز</option>
+          <option value="4">4 - جيد جداً</option>
+          <option value="3">3 - جيد</option>
+          <option value="2">2 - مقبول</option>
+          <option value="1">1 - ضعيف</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="comment">التعليق</label>
+        <textarea id="comment" rows="5" placeholder="شاركنا تجربتك معنا..." required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">إرسال التعليق</button>
+    </form>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+    import {
+      getDatabase,
+      ref,
+      set,
+      push
+    } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyCAU6wCvPQwaSBszgfD7PQMgxVw2CyZOK8",
+      authDomain: "app-appointment-a2793.firebaseapp.com",
+      databaseURL: "https://app-appointment-a2793-default-rtdb.firebaseio.com",
+      projectId: "app-appointment-a2793",
+      storageBucket: "app-appointment-a2793.appspot.com",
+      messagingSenderId: "1015962141540",
+      appId: "1:1015962141540:web:70f8a31f3a55e02179f071"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+  
+    window.submitComment = function (event) {
+      event.preventDefault();
+  
+      const name = document.getElementById("name").value.trim();
+      const rating = parseInt(document.getElementById("rating").value);
+      const comment = document.getElementById("comment").value.trim();
+  
+      if (!rating || !comment) {
+        alert("يرجى إدخال التقييم والتعليق.");
+        return;
+      }
+  
+      const feedbackRef = ref(database, "feedback");
+      const newFeedbackRef = push(feedbackRef);
+  
+      const feedbackData = {
+        name: name || "زائر",
+        rating,
+        comment,
+        timestamp: Date.now()
+      };
+  
+      set(newFeedbackRef, feedbackData)
+        .then(() => {
+          const toast = document.createElement("div");
+          toast.textContent = "✅ تم إرسال التعليق بنجاح!";
+          toast.style.position = "fixed";
+          toast.style.top = "50%";
+          toast.style.left = "50%";
+          toast.style.transform = "translate(-50%, -50%)";
+          toast.style.backgroundColor = "#28a745";
+          toast.style.color = "white";
+          toast.style.padding = "20px 30px";
+          toast.style.borderRadius = "10px";
+          toast.style.fontSize = "18px";
+          toast.style.boxShadow = "0 4px 12px rgba(0,0,0,0.3)";
+          toast.style.zIndex = 9999;
+          document.body.appendChild(toast);
+          setTimeout(() => toast.remove(), 3000);
+
+  
+          document.querySelector(".comment-form").reset();
+        })
+        .catch((error) => {
+          console.error("❌ خطأ أثناء الإرسال:", error);
+          alert("حدث خطأ أثناء إرسال التعليق. حاول لاحقاً.");
+        });
+    };
+  </script>  
+  <script src="script.js"></script>
+  <script src="darkMode.js"></script>
+  <script src="facilityVisibility.js" defer></script>
+</body>
+</html>

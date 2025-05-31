@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>إحصائيات المستشفى</title>
+  <link rel="shortcut icon" href="icon-192.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="stylesheet" href="users.css" />
+  <style>
+ .body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2b6777;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+select {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #f7f7f7;
+  width:150px;
+  text-align: center;
+}
+
+canvas {
+  max-width: 280px !important;
+  max-height: 280px !important;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.info-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  min-width: 300px;
+  margin-left: 50px;
+}
+
+
+.chart-section {
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center;
+  margin-right: 70px;
+  margin-top: 100px;
+  padding: 20px;
+}
+
+
+.summary-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 40px;
+}
+
+.summary-card {
+  background-color: #f7f7f7;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.summary-card p {
+  font-size: 18px;
+  color: #444;
+  margin: 0 0 10px;
+}
+
+.summary-card strong {
+  color: #2b6777;
+  font-size: 22px;
+}
+.sidebar .nav-item {
+        margin: 8px 10px; 
+        padding: 10px 4px; 
+        }
+
+  </style>
+</head>
+<body>
+  <nav class="sidebar">
+    <a href="index.html" class="nav-item">
+      <i class="fas fa-home"></i>
+      <span>الرئيسية</span>
+    </a>
+
+    <a href="staff.html" class="nav-item " data-page="dashboard">
+      <i class="fas fa-clipboard-list"></i>
+      <span>قسم التسجيل</span>
+    </a>
+
+    <a href="statistics.html" class="nav-item active" data-page="statistics">
+      <i class="fas fa-chart-bar"></i>
+      <span>الإحصائيات</span>
+    </a>
+    
+    <a href="make-appointment.html" class="nav-item" data-page="appointment">
+      <i class="fas fa-calendar-plus"></i>
+      <span>حجز موعد</span>
+    </a>
+
+    <a href="stf.profile.html" class="nav-item" data-page="profile">
+      <i class="fas fa-user"></i>
+      <span>الملف الشخصي</span>
+    </a>
+
+    <a href="logout.html" class="nav-item" data-page="logout">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>تسجيل الخروج</span>
+    </a>
+  </nav>
+
+  <h2 class="section-title">📊 إحصائيات المستشفى</h2>
+
+  <div class="main-content">
+    <!-- القسم الأيمن: الفلتر والكروت -->
+    <div class="info-section">
+      <select id="periodFilter">
+        <option value="today">اليوم</option>
+        <option value="week">الأسبوع</option>
+        <option value="month">الشهر</option>
+      </select>
+
+      <div class="summary-container">
+        <div class="summary-card">
+          <p>🧑‍⚕️ عدد المرضى الذين زاروا المستشفى:</p>
+          <strong id="totalVisits">--</strong>
+        </div>
+        <div class="summary-card">
+          <p>✅ عدد المواعيد المؤكدة:</p>
+          <strong id="completedAppointments">--</strong>
+        </div>
+        <div class="summary-card">
+          <p>❌ عدد المواعيد الملغاة:</p>
+          <strong id="canceledAppointments">--</strong>
+        </div>
+         <div class="summary-card">
+        <p>🚫 عدد المواعيد التي لم يتم الحضور لها:</p>
+        <strong id="missedAppointments">--</strong>
+      </div>
+      </div>
+     
+      
+    </div>
+
+    <!-- القسم الأيسر: الرسم البياني -->
+    <div class="chart-section">
+      <canvas id="appointmentsChart"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCAU6wCvPQwaSBszgfD7PQMgxVw2CyZOK8",
+      authDomain: "app-appointment-a2793.firebaseapp.com",
+      databaseURL: "https://app-appointment-a2793-default-rtdb.firebaseio.com",
+      projectId: "app-appointment-a2793",
+      storageBucket: "app-appointment-a2793.appspot.com",
+      messagingSenderId: "1015962141540",
+      appId: "1:1015962141540:web:70f8a31f3a55e02179f071"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    let chart; 
+
+    async function fetchStatsByPeriod() {
+      const period = document.getElementById("periodFilter").value;
+      const today = new Date();
+      const startOfWeek = new Date(today);
+      startOfWeek.setDate(today.getDate() - today.getDay());
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+      const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+      const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+      let totalPatients = new Set();
+      let completedCount = 0;
+      let cancelledCount = 0;
+      let missedCount = 0;
+
+      function isInRange(dateStr) {
+        const date = new Date(dateStr);
+        if (period === "today") return date.toDateString() === today.toDateString();
+        if (period === "week") return date >= startOfWeek && date <= endOfWeek;
+        if (period === "month") return date >= startOfMonth && date <= endOfMonth;
+        return false;
+      }
+
+// قراءة المواعيد المؤكدة فقط من appointments
+const confirmedSnap = await get(ref(db, "appointments"));
+if (confirmedSnap.exists()) {
+  const confirmed = confirmedSnap.val();
+  for (const doctorId in confirmed) {
+    for (const date in confirmed[doctorId]) {
+      if (!isInRange(date)) continue;
+      for (const time in confirmed[doctorId][date]) {
+        const appt = confirmed[doctorId][date][time];
+        const patientKey = appt.patientId || appt.nationalId;
+
+        if (appt.status === "confirmed") {
+          completedCount++;
+          if (patientKey) totalPatients.add(patientKey);
+        }
+      }
+    }
+  }
+}
+
+const cancelledSnap = await get(ref(db, "appointmentsCancelled"));
+if (cancelledSnap.exists()) {
+  const cancelled = cancelledSnap.val();
+  for (const doctorId in cancelled) {
+    for (const date in cancelled[doctorId]) {
+      if (!isInRange(date)) continue;
+      for (const time in cancelled[doctorId][date]) {
+        cancelledCount++;
+      }
+    }
+  }
+}
+
+const missedSnap = await get(ref(db, "appointmentsMissed"));
+if (missedSnap.exists()) {
+  const missed = missedSnap.val();
+  for (const doctorId in missed) {
+    for (const date in missed[doctorId]) {
+      if (!isInRange(date)) continue;
+      for (const time in missed[doctorId][date]) {
+        missedCount++;
+      }
+    }
+  }
+}
+
+
+      document.getElementById("totalVisits").textContent = totalPatients.size;
+      document.getElementById("completedAppointments").textContent = completedCount;
+      document.getElementById("canceledAppointments").textContent = cancelledCount;
+      document.getElementById("missedAppointments").textContent = missedCount;
+
+      // رسم الرسم البياني
+      updateChart(completedCount, cancelledCount, missedCount);
+    }
+
+    function updateChart(confirmed, cancelled, missed) {
+  const ctx = document.getElementById("appointmentsChart").getContext("2d");
+  if (chart) chart.destroy();
+
+  chart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['مؤكدة', 'ملغاة', 'لم يتم الحضور'],
+      datasets: [{
+        label: 'عدد المواعيد',
+        data: [confirmed, cancelled, missed],
+        backgroundColor: ['#4caf50', '#f2545b', '#8e44ad'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            font: { family: 'Cairo', size: 18 },
+            padding: 20
+          }
+        }
+      }
+    }
+  });
+}
+
+
+    window.onload = () => {
+      fetchStatsByPeriod();
+      document.getElementById("periodFilter").addEventListener("change", fetchStatsByPeriod);
+    };
+
+  </script>
+  <script>
+    function goBack() {
+      window.location.href = "staff.html";
+    }
+    </script>
+</body>
+</html>

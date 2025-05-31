@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>إعدادات التطبيق</title>
+    
+        <!-- الخط المستخدم -->
+        <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    
+        <!-- رابط مكتبة Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+        <!-- ملف التنسيقات العامة -->
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="darkmode.css" />
+        <link rel="shortcut icon" href="icon-192.png" type="image/png">
+    <style>
+
+      #setting {
+        margin-right: 250px;
+      }
+    </style>
+
+
+    </head>
+<body>
+   
+  <div class="sidebar">
+    <div class="sidebar-image" id="sidebar-image">
+        <img src="stethoscope-removebg-preview.png" alt="Doctor" />
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html" > <span> الرئيسية</span><i class="fas fa-home"></i></a></li>
+      <li id="aboutLink" style="display:none;">
+          <a href="about.html"><span>معلومات عنا</span><i class="fas fa-info-circle"></i></a></li>            
+      <li><a href="contact.html"><span>اتصل بنا</span><i class="fas fa-phone"></i></a></li>
+      <li id="facilityContactLink" style="display:none;">
+          <a href="facility-contact.html"><span>اتصل بالمؤسسة</span><i class="fas fa-hospital"></i></a></li>
+      <li><a href="feedback.html" ><span>إضافة تعليق</span><i class="fas fa-comment-dots"></i></a></li>
+      <li><a href="settings.html" class="active"><span>إعدادات الموقع</span><i class="fas fa-cogs"></i></a></li>
+      <li><a href="help.html"><span>المساعدة</span><i class="fas fa-question-circle"></i></a></li>
+  </ul>
+</div>
+
+  <h2 class="section-title">⚙️ إعدادات التطبيق</h2>
+<!-- قسم المظهر -->
+<div class="settings-section">
+  <h3 class="section-title">
+    <i class="fas fa-moon"></i>
+    إعدادات العرض
+  </h3>
+
+  <div class="setting-row">
+    <span>الوضع المظلم</span>
+    <label class="switch">
+      <input type="checkbox" id="darkModeToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+  <div class="setting-row">
+    <span>حجم الخط</span>
+    <select id="fontSizeSelector">
+      <option value="14px">صغير</option>
+      <option value="17px" selected>متوسط</option>
+      <option value="20px">كبير</option>
+    </select>
+  </div>
+</div>
+
+<div class="settings-section">
+  <div class="section-title">🌐 اللغة</div>
+  <div class="setting-row">
+    <span>لغة التطبيق</span>
+    <select>
+      <option selected>العربية</option>
+      <option>الإنجليزية</option>
+    </select>
+  </div>
+</div>
+
+  <!-- زر الحفظ -->
+  <button onclick="saveSettings()"  id="setting">💾 حفظ الإعدادات</button>
+  
+  <script src="script.js"></script>
+  <script src="darkMode.js"></script>
+  <script src="facilityVisibility.js" defer></script>
+
+</body>
+</html>

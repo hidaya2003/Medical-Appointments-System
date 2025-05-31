@@ -1,0 +1,155 @@
+:root {
+    --primary-color: #2f75e7;
+    --secondary-color: #f7f7f7;
+    --text-color: #1e40af;
+}
+body {
+font-family: 'Tajawal', sans-serif;
+background-color: #f7f7f7;
+margin: 0;
+padding: 0;
+direction: rtl;
+}
+
+.container {
+max-width: 1200px;
+margin: auto;
+padding: 20px;
+}
+
+.header {
+    background:  var(--primary-color);
+    color: #f7f7f7;
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+    position: relative;
+    overflow: hidden;
+    text-align: right;
+}
+
+.welcome-message {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100vh;
+    background-color: #f7f7f7;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 15px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    z-index: 1000;
+  }
+  
+  .sidebar .nav-item,
+  .sidebar .home-icon {
+    width: 80%;
+    margin: 15px 0;
+    text-align: center;
+    text-decoration: none;
+    color: #2f75e7;
+    padding: 12px 0;
+    border-radius: 10px;
+    transition: 0.3s;
+  }
+      
+  
+  .sidebar .nav-item:hover,
+  .sidebar .home-icon:hover {
+    background-color:  #cfe4ec;
+  }
+  
+  .sidebar i {
+    font-size: 30px;
+    margin-bottom: 5px;
+  }
+  
+  .sidebar span {
+    font-size: 14px;
+    display: block;
+  }
+.nav-item i {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.nav-item span {
+    font-size: 15px;
+}
+
+.nav-item.active {
+    background-color: #cfe4ec;
+    padding: 10px 0;
+    border-radius: 8px;
+}
+
+.nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.appointments-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  #filterSelect {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-family: 'Tajawal', sans-serif;
+  }
+  
+  .appointments-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  
+  .appointment-card {
+    background-color: white;
+    padding: 20px;
+    border-right: 5px solid var(--primary-color);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: 0.3s;
+  }
+  
+  .appointment-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .status {
+    font-weight: bold;
+  }
+  
+  .status.قادم {
+    color: green;
+  }
+  
+  .status.تم {
+    color: gray;
+  }
+  
+  .status.ملغي {
+    color: red;
+  }
+  
+  .appointments-container p {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+  }
+  

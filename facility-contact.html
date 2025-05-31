@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>اتصل بنا</title>
+    
+        <!-- الخط المستخدم -->
+        <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    
+        <!-- رابط مكتبة Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+        <!-- ملف التنسيقات العامة -->
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="darkmode.css" />
+        <link rel="shortcut icon" href="icon-192.png" type="image/png">
+    <style>
+        :root {
+            --primary-color: #2c7be5;
+            --primary-hover: #1a68d1;
+            --secondary-color: #6c757d;
+            --success-color: #00d97e;
+            --danger-color: #e63757;
+            --warning-color: #f6c343;
+            --light-color: #f5f9ff;
+            --dark-color: #283e59;
+            --gray-color: #5a7eb8;
+            --border-color: #e3ebf6;
+            --white: #ffffff;
+        }
+    
+
+        /* المحتوى الرئيسي */
+        .main-content {
+            background-color:#f7f7f7;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            margin-right: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-align: center;
+        }
+        .hospital-logo {
+            margin-right: 250px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .hospital-logo img {
+            height: 120px; /* زيادة الارتفاع قليلاً */
+            width: auto; /* العرض يعتمد على نسبة العرض إلى الارتفاع */
+            object-fit: contain; /* لضمان ظهور الصورة كاملة داخل الحاوية */
+            border-radius: 15px; /* حواف مستديرة لإضفاء مظهر أنيق */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* ظل بسيط لإبراز الصورة */
+            transition: transform 0.3s ease; /* إضافة تأثير تحريك عند التحويم */
+        }
+        .hospital-logo img:hover {
+            transform: scale(1.05); /* تكبير الصورة قليلاً عند التحويم */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-image" id="sidebar-image">
+            <img src="stethoscope-removebg-preview.png" alt="Doctor" />
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" > <span> الرئيسية</span><i class="fas fa-home"></i></a></li>
+            <li id="aboutLink" style="display:none;">
+                <a href="about.html"><span>معلومات عنا</span><i class="fas fa-info-circle"></i></a></li>            
+            <li><a href="contact.html"><span>اتصل بنا</span><i class="fas fa-phone"></i></a></li>
+            <li id="facilityContactLink" style="display:none;">
+                <a href="facility-contact.html" class="active"><span>اتصل بالمؤسسة</span><i class="fas fa-hospital"></i></a></li>
+            <li><a href="feedback.html"><span>إضافة تعليق</span><i class="fas fa-comment-dots"></i></a></li>
+            <li><a href="settings.html"><span>إعدادات الموقع</span><i class="fas fa-cogs"></i></a></li>
+            <li><a href="help.html"><span>المساعدة</span><i class="fas fa-question-circle"></i></a></li>
+        </ul>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="main-content">
+        <div class="header">
+            <h1 class="header-title">اتصل بنا</h1>
+        </div>
+        <div class="hospital-logo">
+            <img src="OIP.jpg" alt="شعار مشفى رعاية تخصصي">
+        </div>
+        <div class="contact-section">
+            <div class="contact-info">
+                <h2><i class="fas fa-info-circle"></i> معلومات التواصل</h2>
+                <div class="contact-method">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>العنوان</h3>
+                        <p>شارع رام الله الرئيسي، بجانب البلدية، رام الله، فلسطين</p>
+                    </div>
+                </div>
+                <div class="contact-method">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>هاتف المشفى</h3>
+                        <p>+970 2 295 1234</p>
+                    </div>
+                </div>
+                <div class="contact-method">
+                    <div class="contact-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>الطوارئ</h3>
+                        <p>+970 59 123 4567</p>
+                    </div>
+                </div>
+                <div class="contact-method">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>البريد الإلكتروني</h3>
+                        <p>info@riaya-hospital.ps</p>
+                    </div>
+                </div>
+                <div class="contact-method">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>ساعات العمل</h3>
+                        <p>الأحد - الخميس: 8 صباحاً - 8 مساءً<br>الجمعة: 10 صباحاً - 4 مساءً<br>السبت: مغلق</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <h2><i class="fas fa-paper-plane"></i> أرسل رسالة</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">الاسم الكامل</label>
+                        <input type="text" id="name" placeholder="أدخل اسمك" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" id="email" placeholder="أدخل بريدك الإلكتروني" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">رقم الهاتف</label>
+                        <input type="tel" id="phone" placeholder="أدخل رقم هاتفك" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">الموضوع</label>
+                        <select id="subject" required>
+                            <option value="">اختر موضوع الرسالة</option>
+                            <option value="appointment">حجز موعد</option>
+                            <option value="inquiry">استفسار طبي</option>
+                            <option value="complaint">شكوى</option>
+                            <option value="suggestion">اقتراح</option>
+                            <option value="other">موضوع آخر</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">الرسالة</label>
+                        <textarea id="message" placeholder="اكتب رسالتك هنا..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">إرسال الرسالة</button>
+                </form>
+            </div>
+        </div>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps?q=31.90577951999848, 35.206659772987216&hl=ar&z=17&output=embed" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+<script src="script.js"></script>
+<script src="facilityVisibility.js" defer></script>
+<script src="darkMode.js"></script>
+</body>
+</html>
+

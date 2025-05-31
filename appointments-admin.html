@@ -1,0 +1,1141 @@
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة المواعيد</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="shortcut icon" href="icon-192.png" type="image/png">
+  <link rel="stylesheet" href="users.css">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-light: #ebf0ff;
+      --secondary: #3f37c9;
+      --success: #4cc9f0;
+      --warning: #f6bb42;
+      --danger: #e9573f;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --border-radius: 12px;
+      --box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --transition: all 0.3s ease;
+    }
+     
+    .sidebar .nav-item {
+        margin: 8px 10px; 
+        padding: 10px 4px; 
+        }
+
+    /* المحتوى الرئيسي */
+    .main-content {
+      margin-right: 100px;
+      padding: 20px;
+      transition: var(--transition);
+    }
+
+    /* بطاقة إدارة المواعيد */
+    .admin-appointments {
+      background: white;
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      max-width: 1000px;
+      margin: 0 auto;
+  margin-bottom: 20px;
+    }
+     
+.section-title {
+  margin-bottom: 0; /* إزالة الهامش السفلي */
+  position: relative;
+  padding-bottom: 10px;
+  color: var(--primary);
+  display: inline-block;
+}
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 80px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 3px;
+    }
+
+    /* شريط الفلاتر المحسن */
+    .filters-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 30px;
+      padding: 10px;
+      background: var(--primary-light);
+      border-radius: var(--border-radius);
+      align-items: flex-end;
+    }
+
+    .filter-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    margin-bottom: 0; /* إزالة أي هوامش سفلية */
+    padding-bottom: 0;
+  }
+
+    .filter-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--primary); 
+    }
+
+    .filter-group input,
+    .filter-group select {
+      width: 100%;
+      padding: 10px 15px;
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+      font-family: inherit;
+      transition: var(--transition);
+      background: white;
+    }
+
+    .filter-group input:focus,
+    .filter-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    }
+
+    .filter-btn {
+      padding: 10px 25px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-btn:hover {
+      background-color: var(--secondary);
+      transform: translateY(-2px);
+    }
+
+    /* جدول المواعيد المطور */
+    .appointments-table {
+      border-radius: var(--border-radius);
+      overflow: hidden;
+    }
+
+    .appointment-card {
+      background: white;
+      margin-bottom: 15px;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      border-right: 4px solid var(--primary);
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    .appointment-card .card-body p {
+  margin: 6px 0;
+  font-size: 15px;
+  color: var(--dark);
+}
+
+.appointment-card .card-body i {
+  color: var(--primary);
+  margin-left: 5px;
+}
+
+.card-header h4 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: var(--primary);
+}
+
+
+    .appointment-card .appointment-actions {
+  position: relative;
+  z-index: 2;
+}
+
+
+    .appointment-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+    }
+
+    .appointment-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(67, 97, 238, 0.03) 0%, rgba(67, 97, 238, 0.01) 100%);
+      z-index: 0;
+    }
+
+    .appointment-card h4 {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+      font-size: 18px;
+      color: var(--primary);
+    }
+
+    .appointment-card h4 i {
+      font-size: 1.1rem;
+    }
+
+    .appointment-card p {
+      margin: 8px 0;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .appointment-card p i {
+      color: var(--gray);
+      width: 20px;
+      text-align: center;
+    }
+
+    /* حالات المواعيد المطورة */
+    .status-label {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .status-confirmed {
+      background-color: #e6f7ee;
+      color: #166534;
+    }
+
+    .status-pending {
+      background-color: #fff8e6;
+      color: #854d0e;
+    }
+
+    .status-cancelled {
+      background-color: #ffebee;
+      color: #b91c1c;
+    }
+
+    .status-completed {
+      background-color: #e6f3ff;
+      color: #1a56a7;
+    }
+
+    /* أزرار الإجراءات المطورة */
+    .appointment-actions {
+      margin-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .appointment-actions button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .appointment-actions .edit {
+      background-color: var(--warning);
+      color: white;
+    }
+
+    .appointment-actions .edit:hover {
+      background-color: #e0a800;
+    }
+
+    .appointment-actions .cancel {
+      background-color: var(--danger);
+      color: white;
+    }
+
+    .appointment-actions .cancel:hover {
+      background-color: #c82333;
+    }
+
+    .appointment-actions .status {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .appointment-actions .status:hover {
+      background-color: var(--secondary);
+    }
+
+    .appointment-actions .delete {
+      background-color: var(--gray);
+      color: white;
+    }
+
+    .appointment-actions .delete:hover {
+      background-color: #5a6268;
+    }
+
+    /* التكيف مع الشاشات الصغيرة */
+    @media (max-width: 992px) {
+      .sidebar {
+        width: 80px;
+        overflow: hidden;
+      }
+      .sidebar .nav-item span {
+        display: none;
+      }
+      .sidebar .nav-item i {
+        margin-left: 0;
+        font-size: 1.3rem;
+      }
+      .main-content {
+        margin-right: 80px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .filters-bar {
+        flex-direction: column;
+      }
+      .filter-group {
+        min-width: 100%;
+      }
+      .appointment-actions {
+        flex-direction: column;
+      }
+      .appointment-actions button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+ /*   button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  margin: 4px;
+  z-index: 2;
+  position: relative;
+}
+
+button:hover {
+  background-color: #0056b3;
+}*/
+/* تنسيق نموذج حجز الموعد */
+.appointment-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.appointment-modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  width: 60%;
+  max-height: 90vh; /* أقصى ارتفاع */
+  overflow-y: auto;
+  max-width: 500px;
+  transition: transform 0.3s ease-in-out;
+}
+.appointments-table {
+  z-index: 1; /* تعيين z-index للمواعيد ليكون أقل من الـ modal */
+}
+
+/* حواف مدورة لكل الحقول */
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* تأثير التفاعل عند التركيز على الحقول */
+input:focus, select:focus, textarea:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* زر الحجز (وضعه في الأسفل) */
+button {
+  padding: 12px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* التأثير عند المرور على الزر */
+button:hover {
+  background-color: #45a049;
+}
+
+/* إضافة تدرجات لونية للحقول */
+input, select, textarea {
+  background: linear-gradient(135deg, #f0f0f0, #fafafa);
+}
+
+/* إضافة تأثيرات جديدة للحقول */
+input::placeholder, select::placeholder, textarea::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+input:focus::placeholder, select:focus::placeholder, textarea:focus::placeholder {
+  color: #4CAF50;
+}
+
+/* تنسيق عنوان النافذة */
+.appointment-modal-content h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* تنسيق النصوص في النافذة */
+.appointment-modal-content p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+}
+#newAppointmentBtn {
+  margin: 0;
+  height: 45px;
+  margin-left: 0; /* جعل الزر يظهر على الجهة اليسرى */
+  margin-right: auto; 
+  margin-bottom: 0px;
+  padding-bottom: 10px;
+}
+
+/* تعديلات للشاشات الصغيرة */
+@media (max-width: 768px) {
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+  
+  #newAppointmentBtn {
+    height: 45px;
+  padding: 0 15px;
+}
+/* تنسيق زر الإغلاق */
+.close-modal {
+  position: absolute;
+  top: 15px;
+  left: 390px;
+  font-size: 35px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.close-modal:hover {
+  color: var(--danger);
+  transform: scale(1.1);
+}
+</style>
+</head>
+<body>
+
+<!-- القائمة الجانبية -->
+<nav class="sidebar">
+    <a href="index.html" class="nav-item">
+      <i class="fas fa-home"></i>
+      <span>الرئيسية</span>
+    </a>
+    <a href="admin.html" class="nav-item" data-page="dashboard">
+      <i class="fas fa-user-injured"></i>
+      <span>واجهة المسؤول</span>
+    </a>
+    <a href="permissions.html" class="nav-item " data-page="permissions">
+      <i class="fas fa-user-shield"></i>
+      <span>الصلاحيات</span>
+    </a>
+    <a href="appointments-admin.html" class="nav-item active" data-page="manage-appointments">
+      <i class="fas fa-calendar-alt"></i>
+      <span>إدارة المواعيد</span>
+    </a>
+    <a href="adm-profile.html" class="nav-item" data-page="profile">
+      <i class="fas fa-user"></i>
+      <span>الملف الشخصي</span>
+    </a>
+    <a href="logout.html" class="nav-item" data-page="logout">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>تسجيل الخروج</span>
+    </a>
+  </nav>
+
+<!-- المحتوى الرئيسي -->
+<div class="main-content">
+  <div class="admin-appointments">
+    <h2 class="section-title">
+      <i class="fas fa-calendar-alt"></i>
+      إدارة المواعيد
+    </h2>
+   <button id="newAppointmentBtn" class="filter-btn">
+          <i class="fas fa-plus-circle"></i> حجز موعد جديد
+        </button>
+    <div class="filters-bar">
+      <div class="filter-group">
+        <label for="filterDoctor"><i class="fas fa-user-md"></i> الطبيب:</label>
+        <select id="filterDoctor">
+          <option value="all">جميع الأطباء</option>
+          <!-- يتم تعبئة الأطباء هنا ديناميكيًا -->
+        </select>        
+      </div>
+    
+      <div class="filter-group">
+        <label for="filterPatient"><i class="fas fa-user-injured"></i> المريض:</label>
+        <input type="text" id="filterPatient" placeholder="ابحث باسم المريض أو الهوية">
+      </div>
+
+       
+    
+      <div class="filter-group">
+        <label for="filterStatus"><i class="fas fa-calendar-check"></i> الحالة:</label>
+        <select id="filterStatus">
+          <option value="all">جميع الحالات</option>
+          <option value="pending">قيد الانتظار</option>
+          <option value="confirmed">مؤكد</option>
+          <option value="cancelled">ملغى</option>
+          <option value="didNotAttend">لم يتم الحضور</option>
+        </select>
+      </div>
+    
+      <div class="filter-group">
+        <label for="filterDate"><i class="fas fa-calendar-day"></i> التاريخ:</label>
+        <input type="date" id="filterDate">
+      </div>
+    
+      <button id="searchBtn" class="filter-btn">
+        <i class="fas fa-search"></i>
+        بحث
+      </button>
+    </div>
+    <!-- جدول المواعيد المطور -->
+    <div id="appointmentsTable" class="appointments-table">
+    </div>
+    </div>
+<!-- حجز الموعد -->
+<div class="appointment-modal" id="appointmentModal">
+  <div class="appointment-modal-content">
+    <span class="close-modal">&times;</span>
+    <h3>حجز موعد جديد</h3>
+    <form id="appointmentForm">
+      <div class="form-group">
+        <label for="doctorName">اسم الطبيب</label>
+        <select id="doctorName" required>
+          <option value="">اختر الطبيب</option>
+          <!-- الأطباء يتم تعبئتهم ديناميكيًا عبر جافا سكربت -->
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="patientName">اسم المريض</label>
+        <input type="text" id="patientName" placeholder="أدخل اسم المريض" required>
+      </div>
+
+      
+      <div class="form-group">
+        <label for="patientNationalId">الرقم الوطني للمريض</label>
+        <input type="text" id="patientNationalId" placeholder="أدخل الرقم الوطني" required>
+      </div>
+  
+
+      <div class="form-group">
+        <label for="appointmentDate">التاريخ</label>
+        <input type="date" id="appointmentDate" required>
+      </div>
+
+      <div class="form-group">
+        <label for="appointmentTime">الوقت</label>
+        <input type="time" id="appointmentTime" required>
+        <label for="timePeriod">فترة اليوم</label>
+        <select id="timePeriod">
+          <option value="AM">صباحاً</option>
+          <option value="PM">مساءً</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <button type="submit">حجز الموعد</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+    </div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+import { getDatabase, ref, get, set, remove, update } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+
+const app = initializeApp({
+  apiKey: "AIzaSyCAU6wCvPQwaSBszgfD7PQMgxVw2CyZOK8",
+  authDomain: "app-appointment-a2793.firebaseapp.com",
+  databaseURL: "https://app-appointment-a2793-default-rtdb.firebaseio.com",
+  projectId: "app-appointment-a2793",
+  storageBucket: "app-appointment-a2793.appspot.com",
+  messagingSenderId: "1015962141540",
+  appId: "1:1015962141540:web:70f8a31f3a55e02179f071"
+});
+
+const db = getDatabase(app);
+
+// تعبئة قائمة الفلاتر للأطباء
+async function populateDoctorsFilter() {
+  const doctorSelect = document.getElementById("filterDoctor");
+  doctorSelect.innerHTML = '<option value="all">جميع الأطباء</option>';
+  const snapshot = await get(ref(db, "users/doctor"));
+  if (snapshot.exists()) {
+    const doctors = snapshot.val();
+    for (const id in doctors) {
+      const doctor = doctors[id];
+      if (doctor.status === "active") {
+        const option = document.createElement("option");
+        option.value = id;
+        option.textContent = `د. ${doctor.name} - ${doctor.specialization}`;
+        doctorSelect.appendChild(option);
+      }
+    }
+  }
+}
+
+async function loadAndDisplayAppointments() {
+  try {
+    const appointmentsSnapshot = await get(ref(db, "appointments"));
+    const cancelledSnapshot = await get(ref(db, "appointmentsCancelled"));
+    const missedSnapshot = await get(ref(db, "appointmentsMissed"));
+    const pendingSnapshot = await get(ref(db, "appointmentsPending"));
+
+    const data = {
+      appointments: appointmentsSnapshot.exists() ? appointmentsSnapshot.val() : {},
+      appointmentsCancelled: cancelledSnapshot.exists() ? cancelledSnapshot.val() : {},
+      appointmentsMissed: missedSnapshot.exists() ? missedSnapshot.val() : {},
+      appointmentsPending: pendingSnapshot.exists() ? pendingSnapshot.val() : {},
+    };
+
+    const allAppointments = collectAllAppointments(data);
+
+    const selectedDoctorId = document.getElementById("filterDoctor")?.value || "all";
+    const selectedStatus = document.getElementById("filterStatus")?.value || "all";
+    const selectedDate = document.getElementById("filterDate")?.value || "";
+    const patientKeyword = document.getElementById("filterPatient")?.value.trim().toLowerCase();
+
+    const filtered = filterAppointments(allAppointments, selectedStatus, selectedDoctorId, selectedDate, patientKeyword);
+
+    const container = document.getElementById("appointmentsTable");
+    container.innerHTML = "";
+
+    if (filtered.length === 0) {
+      container.innerHTML = "<p>لا توجد نتائج مطابقة.</p>";
+      return;
+    }
+
+    filtered.forEach(appt => {
+      const card = renderAppointmentCard(appt);
+      container.appendChild(card);
+    });
+  } catch (error) {
+    console.error("⚠️ خطأ أثناء تحميل المواعيد:", error);
+  }
+}
+
+function collectAllAppointments(data) {
+  const allAppointments = [];
+
+  const sources = {
+    confirmed: data.appointments,
+    cancelled: data.appointmentsCancelled,
+    didNotAttend: data.appointmentsMissed,
+    pending: data.appointmentsPending,
+  };
+
+  for (const [status, source] of Object.entries(sources)) {
+    for (const doctorId in source) {
+      for (const date in source[doctorId]) {
+        for (const time in source[doctorId][date]) {
+          const appointment = source[doctorId][date][time];
+          allAppointments.push({ ...appointment, status });
+        }
+      }
+    }
+  }
+
+  return allAppointments;
+}
+
+// فلترة المواعيد 
+function filterAppointments(allAppointments, selectedStatus, selectedDoctorId, selectedDate, patientKeyword) {
+  return allAppointments.filter(appointment => {
+    const statusMatch = selectedStatus === 'all' || appointment.status === selectedStatus;
+    const doctorMatch = selectedDoctorId === 'all' || appointment.doctorId === selectedDoctorId;
+    const dateMatch = !selectedDate || appointment.date === selectedDate;
+    const patientMatch = !patientKeyword ||
+      (appointment.patientName && appointment.patientName.toLowerCase().includes(patientKeyword)) ||
+      (appointment.nationalId && appointment.nationalId.toString().includes(patientKeyword)) ||
+      (appointment.patientId && appointment.patientId.toString().includes(patientKeyword));
+
+    return statusMatch && doctorMatch && dateMatch && patientMatch;
+  });
+}
+
+function renderAppointmentCard(appointment) {
+  const card = document.createElement("div");
+  card.className = "appointment-card";
+  card.innerHTML = `
+    <div class="card-header">
+      <h4><i class="fas fa-user-md"></i> ${appointment.doctorName || "غير معروف"} - ${appointment.doctorSpecialization || ""}</h4>
+    </div>
+    <div class="card-body">
+      <p><i class="fas fa-calendar-day"></i> <strong>التاريخ:</strong> ${appointment.date}</p>
+      <p><i class="fas fa-clock"></i> <strong>الوقت:</strong> ${appointment.time}</p>
+      <p><i class="fas fa-user-injured"></i> <strong>المريض:</strong> ${appointment.patientName}</p>
+      <p><i class="fas fa-id-card"></i> <strong>الهوية:</strong> ${appointment.nationalId || appointment.patientId || "غير متوفر"}</p>
+      <p><i class="fas fa-info-circle"></i> <strong>الحالة:</strong>
+        <span class="status-label ${getStatusClass(appointment.status)}">
+          <i class="fas ${getStatusIcon(appointment.status)}"></i> ${translateStatus(appointment.status)}
+        </span>
+      </p>
+    </div>
+    <div class="appointment-actions">
+      <button class="edit"><i class="fas fa-edit"></i> تعديل</button>
+      <button class="cancel"><i class="fas fa-ban"></i> إلغاء</button>
+      <button class="delete"><i class="fas fa-trash-alt"></i> حذف</button>
+    </div>
+  `;
+  attachAppointmentActions(card, appointment);
+  return card;
+}
+
+
+
+
+function getStatusClass(status) {
+  switch (status) {
+    case "confirmed": return "status-confirmed";
+    case "pending": return "status-pending";
+    case "cancelled":
+    case "didNotAttend": return "status-cancelled";
+    default: return "status-completed";
+  }
+}
+
+function getStatusIcon(status) {
+  switch (status) {
+    case "confirmed": return "fa-check-circle";
+    case "pending": return "fa-clock";
+    case "cancelled":
+    case "didNotAttend": return "fa-ban";
+    default: return "fa-info-circle";
+  }
+}
+
+function translateStatus(status) {
+  switch (status) {
+    case "confirmed": return "مؤكد";
+    case "pending": return "قيد الانتظار";
+    case "cancelled": return "ملغى";
+    case "didNotAttend": return "لم يتم الحضور";
+    case "completed": return "مكتمل";
+    default: return status;
+  }
+}
+
+
+function attachAppointmentActions(card, appointment) {
+  const editBtn = card.querySelector(".edit");
+  const cancelBtn = card.querySelector(".cancel");
+  const deleteBtn = card.querySelector(".delete");
+
+  editBtn.addEventListener("click", async () => {
+    try {
+      const newDate = prompt("أدخل التاريخ الجديد (YYYY-MM-DD):", appointment.date);
+      const newTime = prompt("أدخل الوقت الجديد (مثال: 01:30 م):", appointment.time);
+      if (!newDate || !newTime) return;
+
+      const newId = `${appointment.doctorId}_${newDate}_${newTime}`;
+      const updatedAppt = { 
+        ...appointment, 
+        date: newDate, 
+        time: newTime, 
+        appointmentId: newId 
+      };
+
+      await set(ref(db, `appointments/${appointment.doctorId}/${newDate}/${newTime}`), updatedAppt);
+      await remove(ref(db, `appointments/${appointment.doctorId}/${appointment.date}/${appointment.time}`));
+
+      const patientId = appointment.patientId || appointment.nationalId;
+      if (patientId) {
+        await set(ref(db, `patientAppointments/${patientId}/${newId}`), updatedAppt);
+        await remove(ref(db, `patientAppointments/${patientId}/${appointment.appointmentId}`));
+      }
+
+      alert("✅ تم تحديث الموعد");
+      filterAppointments();
+    } catch (error) {
+      console.error("Error updating appointment:", error);
+      alert("❌ حدث خطأ أثناء تحديث الموعد");
+    }
+  });
+
+  cancelBtn.addEventListener("click", async () => {
+    try {
+      const confirmCancel = confirm("هل أنت متأكد من إلغاء الموعد؟");
+      if (!confirmCancel) return;
+
+      await set(ref(db, `appointmentsCancelled/${appointment.doctorId}/${appointment.date}/${appointment.time}`), {
+        ...appointment,
+        status: "cancelled",
+        cancelledAt: new Date().toISOString(),
+      });
+      await remove(ref(db, `appointments/${appointment.doctorId}/${appointment.date}/${appointment.time}`));
+
+      const patientId = appointment.patientId || appointment.nationalId;
+      if (patientId) {
+        await update(ref(db, `patientAppointments/${patientId}/${appointment.appointmentId}`), { 
+          status: "cancelled" 
+        });
+      }
+
+      alert("❌ تم إلغاء الموعد");
+      filterAppointments();
+    } catch (error) {
+      console.error("Error canceling appointment:", error);
+      alert("❌ حدث خطأ أثناء إلغاء الموعد");
+    }
+  });
+
+  deleteBtn.addEventListener("click", async () => {
+    try {
+      const confirmDelete = confirm("⚠️ هل أنت متأكد من حذف الموعد نهائيًا؟");
+      if (!confirmDelete) return;
+
+      await remove(ref(db, `appointments/${appointment.doctorId}/${appointment.date}/${appointment.time}`));
+      const patientId = appointment.patientId || appointment.nationalId;
+      if (patientId) {
+        await remove(ref(db, `patientAppointments/${patientId}/${appointment.appointmentId}`));
+      }
+
+      alert("🗑️ تم حذف الموعد نهائيًا");
+      filterAppointments();
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
+      alert("❌ حدث خطأ أثناء حذف الموعد");
+    }
+  });
+}
+
+// حجز الموعد
+async function reserveAppointment(patientKeyword, doctorId, date, time) {
+  try {
+    const snapshot = await get(ref(db, "patients"));
+    let patientData = null;
+
+    // البحث عن المريض بناءً على الاسم أو الرقم الوطني
+    const patients = snapshot.val();
+    for (const id in patients) {
+      const patient = patients[id];
+      if (patient.name.toLowerCase().includes(patientKeyword) || patient.nationalId === patientKeyword) {
+        patientData = patient;
+        break;
+      }
+    }
+
+    if (!patientData) {
+      alert("المريض غير موجود!");
+      return;
+    }
+
+    // إنشاء معرف الموعد
+    const appointmentId = `${doctorId}_${date}_${time}`;
+
+    // إضافة الموعد إلى قاعدة البيانات (مع حالة مؤكد)
+    await set(ref(db, `appointments/${doctorId}/${date}/${time}`), {
+      appointmentId,
+      doctorId,
+      patientId: patientData.id,
+      patientName: patientData.name,
+      nationalId: patientData.nationalId,
+      date,
+      time,
+      status: "confirmed" // تعيين الحالة إلى "مؤكد"
+    });
+
+    // إضافة الموعد إلى مواعيد المريض أيضًا
+    await set(ref(db, `patientAppointments/${patientData.id}/${appointmentId}`), {
+      appointmentId,
+      doctorId,
+      patientId: patientData.id,
+      patientName: patientData.name,
+      nationalId: patientData.nationalId,
+      date,
+      time,
+      status: "confirmed" // تعيين الحالة إلى "مؤكد"
+    });
+
+    alert("تم حجز الموعد بنجاح!");
+    filterAppointments();  // تحديث المواعيد المعروضة
+    const modal = document.querySelector(".appointment-modal");
+    modal.remove();
+  } catch (error) {
+    console.error("Error reserving appointment:", error);
+    alert("حدث خطأ أثناء حجز الموعد.");
+  }
+}
+
+document.getElementById("newAppointmentBtn").addEventListener("click", function() {
+  const modal = document.getElementById("appointmentModal");
+  modal.style.display = "flex";
+  populateDoctorsDropdown(); // تعبئة قائمة الأطباء عند فتح النافذة
+});
+
+// تعبئة قائمة الأطباء
+async function populateDoctorsDropdown() {
+  const doctorSelect = document.getElementById("doctorName");
+  doctorSelect.innerHTML = `<option value="">اختر الطبيب</option>`; // لحذف المكرر
+
+  try {
+    const snapshot = await get(ref(db, 'users/doctor'));
+    if (snapshot.exists()) {
+      const doctors = snapshot.val();
+      for (const id in doctors) {
+        const doctor = doctors[id];
+        if (doctor.status === 'active') {
+          const option = document.createElement("option");
+          option.value = id;
+          option.textContent = `${doctor.name} - ${doctor.specialization}`;
+          doctorSelect.appendChild(option);
+        }
+      }
+    }
+  } catch (error) {
+    console.error("حدث خطأ أثناء جلب بيانات الأطباء:", error);
+  }
+}
+
+// دالة لتحويل الوقت من 24 ساعة إلى تنسيق عربي
+function formatArabicTime(time24) {
+  const [hourStr, minute] = time24.split(":");
+  let hour = parseInt(hourStr);
+  let period = "ص";
+
+  if (hour === 0) {
+    hour = 12;
+    period = "ص";
+  } else if (hour < 12) {
+    period = "ص";
+  } else if (hour === 12) {
+    period = "م";
+  } else {
+    hour -= 12;
+    period = "م";
+  }
+
+  const formattedHour = hour.toString().padStart(2, "0");
+  return `${formattedHour}:${minute} ${period}`;
+}
+
+document.getElementById("appointmentForm").addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  const doctorId = document.getElementById("doctorName").value;
+  const patientName = document.getElementById("patientName").value;
+  const nationalId = document.getElementById("patientNationalId").value;
+  const appointmentDate = document.getElementById("appointmentDate").value;
+  const appointmentTime = document.getElementById("appointmentTime").value;
+
+  if (!doctorId || !patientName || !nationalId || !appointmentDate || !appointmentTime) {
+    alert("يرجى ملء جميع الحقول.");
+    return;
+  }
+
+  const day = new Date(appointmentDate).getDay();
+  if (day === 5 || day === 6) {
+    alert("لا يمكن الحجز يوم الجمعة أو السبت.");
+    return;
+  }
+
+  const formattedTime = formatArabicTime(appointmentTime); // تحويل الوقت هنا
+  const formattedDate = new Date(appointmentDate).toISOString().split("T")[0];
+  const appointmentId = `${doctorId}_${formattedDate}_${formattedTime.replace(":", "-")}`;
+
+  try {
+    // التحقق من وجود الموعد بالفعل
+    const appointmentRef = ref(db, `appointments/${doctorId}/${formattedDate}/${formattedTime}`);
+    const existingAppointmentSnapshot = await get(appointmentRef);
+
+    if (existingAppointmentSnapshot.exists()) {
+      alert("⚠️ هذا الوقت محجوز بالفعل. الرجاء اختيار وقت آخر.");
+      return;
+    }
+
+    // التحقق من أن نفس المريض لم يحجز مع نفس الطبيب في نفس اليوم
+    const patientAppointmentsRef = ref(db, `patientAppointments/${nationalId}`);
+    const patientSnapshot = await get(patientAppointmentsRef);
+    if (patientSnapshot.exists()) {
+      const patientAppointments = patientSnapshot.val();
+      for (const apptId in patientAppointments) {
+        const appt = patientAppointments[apptId];
+        if (appt.doctorId === doctorId && appt.date === formattedDate) {
+          alert("⚠️ لا يمكن حجز أكثر من موعد لنفس الطبيب في نفس اليوم.");
+          return;
+        }
+      }
+    }
+
+    const doctorSnapshot = await get(ref(db, `users/doctor/${doctorId}`));
+if (!doctorSnapshot.exists()) {
+  alert("لم يتم العثور على بيانات الطبيب.");
+  return;
+}
+
+const doctor = doctorSnapshot.val();
+const doctorName = doctor.name || "غير معروف";
+const doctorSpecialization = doctor.specialization || "غير محدد";
+
+
+document.getElementById("doctorName").addEventListener("change", function () {
+  const doctorId = this.value;
+  const date = document.getElementById("appointmentDate").value;
+  if (doctorId && date) generateTimeSlots(doctorId, date);
+});
+
+document.getElementById("appointmentDate").addEventListener("change", function () {
+  const date = this.value;
+  const doctorId = document.getElementById("doctorName").value;
+  if (doctorId && date) generateTimeSlots(doctorId, date);
+});
+async function generateTimeSlots(doctorId, selectedDate) {
+  const timeSelect = document.getElementById("appointmentTime");
+  timeSelect.innerHTML = ""; // حذف الأوقات القديمة
+
+  const startHour = 9;
+  const endHour = 16.5; // 4:30 م
+
+  // جلب المواعيد المحجوزة لهذا اليوم للطبيب
+  const snapshot = await get(ref(db, `appointments/${doctorId}/${selectedDate}`));
+  const reservedTimes = snapshot.exists() ? Object.keys(snapshot.val()) : [];
+
+  for (let hour = startHour; hour <= endHour; hour += 0.5) {
+    let h = Math.floor(hour);
+    let m = (hour % 1 === 0.5) ? "30" : "00";
+    let period = h >= 12 ? "م" : "ص";
+    let hour12 = h > 12 ? h - 12 : h;
+    hour12 = hour12 === 0 ? 12 : hour12;
+
+    const timeFormatted = `${hour12.toString().padStart(2, "0")}:${m} ${period}`;
+    const option = document.createElement("option");
+    option.value = timeFormatted;
+
+    if (reservedTimes.includes(timeFormatted)) {
+      option.textContent = `${timeFormatted} - محجوز`;
+      option.disabled = true;
+    } else {
+      option.textContent = timeFormatted;
+    }
+
+    timeSelect.appendChild(option);
+  }
+}
+// إنشاء كائن الموعد
+const appointmentData = {
+  appointmentId,
+  doctorId,
+  doctorName,
+  doctorSpecialization,
+  patientName,
+  nationalId,
+  date: formattedDate,
+  time: formattedTime,
+  status: "confirmed",
+  createdAt: new Date().toISOString()
+};
+
+// الحفظ في القاعدة
+await set(ref(db, `appointments/${doctorId}/${formattedDate}/${formattedTime}`), appointmentData);
+await set(ref(db, `patientAppointments/${nationalId}/${appointmentId}`), appointmentData);
+    alert("✅ تم حجز الموعد بنجاح.");
+    document.getElementById("appointmentModal").style.display = "none";
+    loadAndDisplayAppointments();
+  } catch (error) {
+    console.error("❌ خطأ أثناء الحجز:", error);
+    alert("حدث خطأ أثناء حجز الموعد.");
+  }
+});
+
+// إغلاق النافذة 
+document.querySelector('.close-modal').addEventListener('click', function() {
+  document.getElementById('appointmentModal').style.display = 'none';
+});
+
+// إغلاق النافذة عند النقر خارجها
+window.addEventListener('click', function(event) {
+  const modal = document.getElementById('appointmentModal');
+  if (event.target === modal) {
+    modal.style.display = 'none';
+  }
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  populateDoctorsFilter();
+  loadAndDisplayAppointments();
+
+  document.getElementById("searchBtn").addEventListener("click", function(e) {
+    e.preventDefault();
+    loadAndDisplayAppointments();
+  });
+});
+</script>
+</body>
+</html>  

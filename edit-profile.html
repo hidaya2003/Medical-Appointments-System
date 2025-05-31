@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعديل الملف الشخصي - المستشفى التخصصي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="icon-192.png" type="image/png">
+    <link rel="stylesheet" href="users.css" />
+    <style>
+        /* نفس تنسيقك السابق بدون تغيير */
+        :root {
+            --primary-color: #2563eb;
+            --light-gray: #ddd;
+            --dark-gray: #555;
+        }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #eef2f7;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+           /* margin: auto;*/
+            padding: 20px;
+            margin-top: 40px;
+        }
+        .profile-container {
+            background-color: #f7f7f7;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        .input-field {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .input-label {
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+        .input-box {
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+        .save-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 16px;
+            width: 100%;
+        }
+        .save-btn:hover {
+            background-color: #1e40af;
+        }
+
+        .detail-title {
+            color:#2f75e7 ;
+        }
+
+        .detail-card {
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-avatar {
+                margin-left: 0;
+                margin-bottom: 15px;
+            }
+        }
+
+        .back-icon {
+        width: 50px;
+        height: 50px;
+        position: fixed;
+        top: 20px;
+        right:20px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: transform 0.3s ease-in-out;
+        }
+
+        .back-icon:hover {
+            transform: scale(1.2);
+        }
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: #f7f7f7;
+            transition: all 0.3s;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+        .password-section {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 30px;  /* زيادة المسافة الفاصلة */
+        margin-bottom: 20px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .password-title {
+        color: #2f75e7;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+    }
+
+    .password-title i {
+        margin-left: 10px;
+        color: #2f75e7;
+    }
+
+    .password-container {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .password-toggle {
+        position: absolute;
+        top: 38px;
+        left: 12px;
+        cursor: pointer;
+        color: #64748b;
+        z-index: 2;
+    }
+
+    .password-field {
+        width: 100%;
+        padding: 12px 15px 12px 40px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 1rem;
+        background-color: #f8fafc;
+        transition: all 0.3s;
+        box-sizing: border-box;
+    }
+
+    .password-field:focus {
+        border-color: #2f75e7;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(47, 117, 231, 0.1);
+    }
+
+    .change-password-btn {
+        background-color: #4b5563;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s;
+        margin-top: 10px;
+        width: 100%;
+        font-family: 'Tajawal', sans-serif;
+    }
+
+    .change-password-btn:hover {
+        background-color: #374151;
+    }
+
+    .change-password-btn i {
+        margin-left: 8px;
+    }
+    </style>
+</head>
+<body>
+<img src="arrow_forward_24dp_4B77D1_FILL0_wght400_GRAD0_opsz24.png" 
+alt="رجوع" 
+style="cursor: pointer; width: 40px;" 
+onclick="goBack()"
+class="back-icon">
+
+<div class="container">
+<div class="profile-container">
+    <div class="profile-details">
+        <div class="detail-card">
+            <h2 class="detail-title"><i class="fas fa-info-circle"></i> تعديل المعلومات الشخصية</h2>
+            <div class="input-field">
+                <label for="fullName" class="input-label">الاسم الكامل:</label>
+                <input type="text" id="fullName" class="input-box" disabled>
+            </div>
+            <div class="input-field">
+                <label for="gender" class="input-label">الجنس:</label>
+                <select id="gender" class="input-box" disabled>
+                    <option value="">اختر الجنس</option>
+                    <option value="ذكر">ذكر</option>
+                    <option value="أنثى">أنثى</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label for="dob" class="input-label">تاريخ الميلاد:</label>
+                <input type="date" id="dob" class="input-box" disabled>
+            </div>
+            <div class="input-field">
+                <label for="nationalId" class="input-label">رقم الهوية:</label>
+                <input type="text" id="nationalId" class="input-box" disabled>
+            </div>
+        </div>
+
+        <div class="detail-card">
+            <h2 class="detail-title"><i class="fas fa-phone-alt"></i> تعديل معلومات الاتصال</h2>
+            <div class="input-field">
+                <label for="phone" class="input-label">رقم الهاتف:</label>
+                <input type="text" id="phone" class="input-box" >
+            </div>
+            <div class="input-field">
+                <label for="email" class="input-label">البريد الإلكتروني:</label>
+                <input type="email" id="email" class="input-box">
+            </div>
+            <div class="input-field">
+                <label for="address" class="input-label">العنوان:</label>
+                <input type="text" id="address" class="input-box">
+            </div>
+        </div>
+
+        <div class="detail-card">
+            <h2 class="detail-title"><i class="fas fa-heartbeat"></i> تعديل المعلومات الطبية</h2>
+            <div class="input-field">
+                <label for="blood" class="input-label">فصيلة الدم:</label>
+                <select id="blood" class="input-box"  disabled>
+                    <option value="">اختر الفصيلة</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label for="hasAllergy" class="input-label">هل لديك حساسية؟</label>
+                <select id="hasAllergy" class="input-box">
+                    <option value="">اختر</option>
+                    <option value="لا">لا</option>
+                    <option value="نعم">نعم</option>
+                </select>
+            </div>
+            
+            <div class="input-field">
+                <label for="allergyType" class="input-label">نوع الحساسية:</label>
+                <select id="allergyType" class="input-box" disabled>
+                    <option value="">اختر نوع الحساسية</option>
+                    <option value="غبار">غبار</option>
+                    <option value="غذائية - الفول السوداني">غذائية - الفول السوداني</option>
+                    <option value="غذائية - البيض">غذائية - البيض</option>
+                    <option value="غذائية - الحليب">غذائية - الحليب</option>
+                    <option value="غذائية - الجلوتين (قمح)">غذائية - الجلوتين (قمح)</option>
+                    <option value="غذائية - المحار/الأسماك">غذائية - المحار/الأسماك</option>
+                    <option value="غذائية - الصويا">غذائية - الصويا</option>
+                    <option value="دوائية - البنسلين">دوائية - البنسلين</option>
+                    <option value="دوائية - مضادات حيوية أخرى">دوائية - مضادات حيوية أخرى</option>
+                    <option value="دوائية - مضادات الالتهاب">دوائية - مضادات الالتهاب</option>
+                    <option value="اللاتكس">اللاتكس</option>
+                    <option value="لسعات النحل أو الحشرات">لسعات النحل أو الحشرات</option>
+                    <option value="العفن والرطوبة">العفن والرطوبة</option>
+                    <option value="العطور ومواد التجميل">العطور ومواد التجميل</option>
+                    <option value="حيوانات أليفة">حيوانات أليفة</option>
+                    <option value="أخرى">أخرى</option>
+                </select>
+                
+            
+                <div class="input-field" id="customAllergyDiv" style="display:none;">
+                    <label for="customAllergy" class="input-label">أدخل نوع الحساسية:</label>
+                    <input type="text" id="customAllergy" class="input-box" placeholder="اكتب نوع الحساسية هنا">
+               </div>
+            </div>
+        </div>
+               <div class="password-section">
+                <h2 class="password-title"><i class="fas fa-lock"></i> تغيير كلمة المرور</h2>
+            
+                <div class="form-group">
+                    <label for="currentPassword">كلمة المرور الحالية:</label>
+                    <div class="password-container">
+                        <input type="password" id="currentPassword" name="currentPassword" 
+                               placeholder="أدخل كلمة المرور الحالية" class="password-field">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="newPassword">كلمة المرور الجديدة:</label>
+                    <div class="password-container">
+                        <input type="password" id="newPassword" name="newPassword" 
+                               placeholder="أدخل كلمة المرور الجديدة" class="password-field">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">تأكيد كلمة المرور الجديدة:</label>
+                    <div class="password-container">
+                        <input type="password" id="confirmPassword" name="confirmPassword" 
+                               placeholder="أعد إدخال كلمة المرور الجديدة" class="password-field">
+                    </div>
+                </div>
+            
+                <button type="button" class="change-password-btn" onclick="changePassword()">
+                    <i class="fas fa-key"></i> تغيير كلمة المرور
+                </button>
+            </div>
+        <div class="detail-card">
+            <button class="save-btn" onclick="saveChanges()">حفظ التعديلات</button>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+function goBack() {
+    window.location.href = "profile.html";
+}
+
+//console.log("patientId from localStorage:", localStorage.getItem("patientId"));
+
+function togglePassword(fieldId, icon) {
+  const passwordField = document.getElementById(fieldId);
+  if (passwordField.type === 'password') {
+    passwordField.type = 'text';
+    icon.classList.remove('fa-eye');
+    icon.classList.add('fa-eye-slash');
+  } else {
+    passwordField.type = 'password';
+    icon.classList.remove('fa-eye-slash');
+    icon.classList.add('fa-eye');
+  }
+}
+</script>    
+
+<script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js';
+    import { getDatabase, ref, get, update } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js';
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyCAU6wCvPQwaSBszgfD7PQMgxVw2CyZOK8",
+        authDomain: "app-appointment-a2793.firebaseapp.com",
+        databaseURL: "https://app-appointment-a2793-default-rtdb.firebaseio.com",
+        projectId: "app-appointment-a2793",
+        storageBucket: "app-appointment-a2793.appspot.com",
+        messagingSenderId: "1015962141540",
+        appId: "1:1015962141540:web:70f8a31f3a55e02179f071"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    
+    // متغيرات عامة
+    let originalData = {}; 
+    let patientRef = null;
+    
+    document.addEventListener('DOMContentLoaded', async () => {
+        const userId = localStorage.getItem("patientId");
+        const role = localStorage.getItem("userRole");
+    
+        if (!userId || !role) {
+            alert("لم يتم العثور على بيانات الدخول، يرجى تسجيل الدخول مرة أخرى.");
+            window.location.href = 'index.html';
+            return;
+        }
+    
+        patientRef = ref(db, `users/${role}/${userId}`);
+        try {
+            const snapshot = await get(patientRef);
+            if (!snapshot.exists()) {
+                alert("❌ لم يتم العثور على بيانات المستخدم.");
+                return;
+            }
+    
+            originalData = snapshot.val(); // ⬅️ حفظ البيانات الأصلية
+    
+            const allergyTypeSelect = document.getElementById('allergyType');
+            const hasAllergySelect = document.getElementById('hasAllergy');
+            const customAllergyDiv = document.getElementById('customAllergyDiv');
+            const customAllergyInput = document.getElementById('customAllergy');
+    
+            document.getElementById('fullName').value = originalData.name || '';
+            document.getElementById('gender').value = originalData.gender || '';
+            document.getElementById('dob').value = originalData.dob || '';
+            document.getElementById('nationalId').value = originalData.nationalId || '';
+            document.getElementById('phone').value = originalData.phone || '';
+            document.getElementById('email').value = originalData.email || '';
+            document.getElementById('address').value = (originalData.city && originalData.town) ? `${originalData.city}، ${originalData.town}` : '';
+            document.getElementById('blood').value = originalData.bloodType || '';
+            document.getElementById('hasAllergy').value = originalData.allergy ? 'نعم' : 'لا';
+            document.getElementById('allergyType').value = originalData.allergy || '';
+    
+            allergyTypeSelect.disabled = !(originalData.allergy && originalData.allergy.trim() !== '');
+    
+            allergyTypeSelect.addEventListener('change', () => {
+                if (allergyTypeSelect.value === 'أخرى') {
+                    customAllergyDiv.style.display = 'block';
+                } else {
+                    customAllergyDiv.style.display = 'none';
+                    customAllergyInput.value = '';
+                }
+            });
+    
+            if (originalData.allergy === 'أخرى') {
+                customAllergyDiv.style.display = 'block';
+                customAllergyInput.value = '';
+            }
+    
+            hasAllergySelect.addEventListener('change', () => {
+                if (hasAllergySelect.value === 'نعم') {
+                    allergyTypeSelect.disabled = false;
+                } else {
+                    allergyTypeSelect.disabled = true;
+                    allergyTypeSelect.value = '';
+                    customAllergyDiv.style.display = 'none';
+                    customAllergyInput.value = '';
+                }
+            });
+    
+        } catch (err) {
+            console.error("⚠️ خطأ في جلب البيانات:", err.message);
+            alert("حدث خطأ أثناء تحميل بيانات الملف الشخصي.");
+        }
+    });
+    
+    function changePassword() {
+        const currentPassword = document.getElementById("currentPassword").value.trim();
+        const newPassword = document.getElementById("newPassword").value.trim();
+        const confirmPassword = document.getElementById("confirmPassword").value.trim();
+    
+        if (!currentPassword || !newPassword || !confirmPassword) {
+            alert("يرجى تعبئة جميع الحقول.");
+            return;
+        }
+    
+        if (newPassword !== confirmPassword) {
+            alert("كلمة المرور الجديدة وتأكيدها غير متطابقتين.");
+            return;
+        }
+    
+        if (currentPassword !== originalData.password) {
+            alert("كلمة المرور الحالية غير صحيحة.");
+            return;
+        }
+    
+        if (currentPassword === newPassword) {
+            alert("كلمة المرور الجديدة يجب أن تكون مختلفة عن الحالية.");
+            return;
+        }
+    
+        const updates = { password: newPassword };
+    
+        update(patientRef, updates).then(() => {
+            alert("تم تغيير كلمة المرور بنجاح!");
+            document.getElementById("currentPassword").value = "";
+            document.getElementById("newPassword").value = "";
+            document.getElementById("confirmPassword").value = "";
+            originalData.password = newPassword;
+        }).catch((error) => {
+            console.error("فشل في تغيير كلمة المرور:", error);
+            alert("حدث خطأ أثناء تغيير كلمة المرور.");
+        });
+    }
+    
+    window.changePassword = changePassword;
+    </script>           
+</body>
+</html>

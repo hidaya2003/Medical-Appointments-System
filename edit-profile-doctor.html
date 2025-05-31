@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>تعديل الملف الشخصي - الطبيب</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="shortcut icon" href="icon-192.png" type="image/png">
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --light-gray: #ddd;
+      --dark-gray: #555;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #eef2f7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      padding: 20px;
+      margin-top: 40px;
+      margin-inline: auto;
+    }
+
+    .profile-container {
+      background-color: #f7f7f7;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .input-field {
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-label {
+      font-weight: 500;
+      color: var(--dark-gray);
+    }
+
+    .input-box {
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      margin-top: 5px;
+      background-color: #fafafa;
+      transition: 0.3s ease;
+    }
+
+    .input-box:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      background-color: #fff;
+    }
+
+    .save-btn {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s;
+      width: 100%;
+    }
+
+    .save-btn:hover {
+      background-color: #1e40af;
+    }
+
+    .detail-title {
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    .detail-card {
+      background-color: #f7f7f7;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-right: 3px solid #2563eb;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    .back-icon {
+      width: 50px;
+      height: 50px;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      z-index: 1000;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .back-icon:hover {
+      transform: scale(1.2);
+    }
+    .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: #f7f7f7;
+            transition: all 0.3s;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+        .password-section {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 30px;  /* زيادة المسافة الفاصلة */
+        margin-bottom: 20px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .password-title {
+        color: #2f75e7;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+    }
+
+    .password-title i {
+        margin-left: 10px;
+        color: #2f75e7;
+    }
+
+    .password-container {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .password-toggle {
+        position: absolute;
+        top: 38px;
+        left: 12px;
+        cursor: pointer;
+        color: #64748b;
+        z-index: 2;
+    }
+
+    .password-field {
+        width: 100%;
+        padding: 12px 15px 12px 40px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 1rem;
+        background-color: #f8fafc;
+        transition: all 0.3s;
+        box-sizing: border-box;
+    }
+
+    .password-field:focus {
+        border-color: #2f75e7;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(47, 117, 231, 0.1);
+    }
+
+    .change-password-btn {
+        background-color: #4b5563;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s;
+        margin-top: 10px;
+        width: 100%;
+        font-family: 'Tajawal', sans-serif;
+    }
+
+    .change-password-btn:hover {
+        background-color: #374151;
+    }
+
+    .change-password-btn i {
+        margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+  <img src="arrow_forward_24dp_4B77D1_FILL0_wght400_GRAD0_opsz24.png" alt="رجوع" onclick="goBack()" class="back-icon">
+
+  <div class="container">
+    <div class="profile-container">
+      <div class="profile-details">
+        <div class="detail-card">
+          <h2 class="detail-title"><i class="fas fa-user-edit"></i> تعديل معلومات الاتصال</h2>
+          <div class="input-field">
+            <label for="phone" class="input-label">رقم الهاتف:</label>
+            <input type="text" id="phone" class="input-box">
+          </div>
+          <div class="input-field">
+            <label for="email" class="input-label">البريد الإلكتروني:</label>
+            <input type="email" id="email" class="input-box">
+          </div>
+          <div class="input-field">
+            <label for="city" class="input-label">المدينة:</label>
+            <select id="city" class="input-box">
+              <option value="">اختر المدينة</option>
+              <option value="رام الله">رام الله</option>
+              <option value="القدس">القدس</option>
+              <option value="الخليل">الخليل</option>
+              <option value="نابلس">نابلس</option>
+              <option value="بيت لحم">بيت لحم</option>
+              <option value="طولكرم">طولكرم</option>
+              <option value="قلقيلية">قلقيلية</option>
+              <option value="سلفيت">سلفيت</option>
+              <option value="جنين">جنين</option>
+              <option value="أريحا">أريحا</option>
+              <option value="طوباس">طوباس</option>
+            </select>
+          </div>
+          
+          <div class="input-field">
+            <label for="town" class="input-label">البلدة:</label>
+            <input type="text" id="town" class="input-box">
+          </div>
+              
+          
+          <h2 class="detail-title" style="margin-top: 25px;"><i class="fas fa-lock"></i> تغيير كلمة المرور</h2>
+
+          <div class="form-group">
+            <label for="currentPassword">كلمة المرور الحالية:</label>
+            <div class="password-container">
+                <input type="password" id="currentPassword" name="currentPassword" 
+                       placeholder="أدخل كلمة المرور الحالية" class="password-field">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="newPassword">كلمة المرور الجديدة:</label>
+            <div class="password-container">
+                <input type="password" id="newPassword" name="newPassword" 
+                       placeholder="أدخل كلمة المرور الجديدة" class="password-field">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="confirmPassword">تأكيد كلمة المرور الجديدة:</label>
+            <div class="password-container">
+                <input type="password" id="confirmPassword" name="confirmPassword" 
+                       placeholder="أعد إدخال كلمة المرور الجديدة" class="password-field">
+            </div>
+        </div>
+
+          <button type="button" class="change-password-btn" onclick="changePassword()">
+            <i class="fas fa-key"></i> تغيير كلمة المرور
+          </button>
+
+        </div>
+
+        
+          <button class="save-btn" onclick="saveProfile()">💾 حفظ التعديلات</button>
+       
+      </div>
+    </div>
+  </div>
+  <script>
+ function goBack() {
+      window.location.href = "D.profile.html";
+    }
+
+    function togglePassword(fieldId, icon) {
+        const passwordField = document.getElementById(fieldId);
+        if (passwordField.type === 'password') {
+          passwordField.type = 'text';
+          icon.classList.remove('fa-eye');
+          icon.classList.add('fa-eye-slash');
+        } else {
+          passwordField.type = 'password';
+          icon.classList.remove('fa-eye-slash');
+          icon.classList.add('fa-eye');
+        }
+      }       
+  </script>  
+ <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCAU6wCvPQwaSBszgfD7PQMgxVw2CyZOK8",
+    authDomain: "app-appointment-a2793.firebaseapp.com",
+    databaseURL: "https://app-appointment-a2793-default-rtdb.firebaseio.com",
+    projectId: "app-appointment-a2793",
+    storageBucket: "app-appointment-a2793.appspot.com",
+    messagingSenderId: "1015962141540",
+    appId: "1:1015962141540:web:70f8a31f3a55e02179f071"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  const nationalId = localStorage.getItem('nationalId') || localStorage.getItem('patientId') || localStorage.getItem('loggedInId');
+  const userRef = ref(db, `users/doctor/${nationalId}`);
+
+  const phoneInput = document.getElementById("phone");
+  const emailInput = document.getElementById("email");
+  const cityInput = document.getElementById("city");
+  const townInput = document.getElementById("town");
+
+  let originalData = {};
+
+  async function loadProfile() {
+    if (!nationalId) return;
+
+    try {
+      const snapshot = await get(userRef);
+
+      if (snapshot.exists()) {
+        originalData = snapshot.val();
+
+        phoneInput.value = originalData.phone || '';
+        emailInput.value = originalData.email || '';
+        cityInput.value = originalData.city || '';
+        townInput.value = originalData.town || '';
+      } else {
+        alert("لم يتم العثور على بيانات الحساب.");
+      }
+    } catch (error) {
+      console.error("خطأ في تحميل البيانات:", error);
+      alert("حدث خطأ أثناء تحميل البيانات.");
+    }
+  }
+
+  window.saveProfile = async function () {
+    const updates = {
+      phone: phoneInput.value.trim(),
+      email: emailInput.value.trim(),
+      city: cityInput.value.trim(),
+      town: townInput.value.trim()
+    };
+
+    try {
+      await update(userRef, updates);
+      alert("✅ تم تحديث البيانات بنجاح.");
+      window.location.href = "D.profile.html";
+    } catch (error) {
+      alert("❌ حدث خطأ أثناء التحديث.");
+      console.error(error);
+    }
+  };
+
+  // تغيير كلمة المرور للطبيب
+  window.changePassword = async function () {
+    const currentPassword = document.getElementById("currentPassword").value.trim();
+    const newPassword = document.getElementById("newPassword").value.trim();
+    const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      alert("يرجى تعبئة جميع الحقول.");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      alert("كلمة المرور الجديدة وتأكيدها غير متطابقتين.");
+      return;
+    }
+
+    if (currentPassword !== originalData.password) {
+      alert("كلمة المرور الحالية غير صحيحة.");
+      return;
+    }
+
+    if (currentPassword === newPassword) {
+      alert("كلمة المرور الجديدة يجب أن تكون مختلفة عن الحالية.");
+      return;
+    }
+
+    try {
+      await update(userRef, { password: newPassword });
+      alert("✅ تم تغيير كلمة المرور بنجاح!");
+      document.getElementById("currentPassword").value = "";
+      document.getElementById("newPassword").value = "";
+      document.getElementById("confirmPassword").value = "";
+      originalData.password = newPassword;
+    } catch (error) {
+      console.error("فشل في تغيير كلمة المرور:", error);
+      alert("❌ حدث خطأ أثناء تغيير كلمة المرور.");
+    }
+  };
+
+  loadProfile();
+</script>  
+</body>
+</html>
+

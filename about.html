@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>معلومات عنا</title>
+    
+        <!-- الخط المستخدم -->
+        <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    
+        <!-- رابط مكتبة Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+        <!-- ملف التنسيقات العامة -->
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="about.css">
+        <link rel="stylesheet" href="darkmode.css"/>
+        <link rel="shortcut icon" href="icon-192.png" type="image/png">
+    </head>
+<body>
+   
+  <div class="sidebar">
+    <div class="sidebar-image" id="sidebar-image">
+        <img src="stethoscope-removebg-preview.png" alt="Doctor" />
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html" > <span> الرئيسية</span><i class="fas fa-home"></i></a></li>
+      <li id="aboutLink" style="display:none;">
+          <a href="about.html" class="active"><span>معلومات عنا</span><i class="fas fa-info-circle"></i></a></li>            
+      <li><a href="contact.html"><span>اتصل بنا</span><i class="fas fa-phone"></i></a></li>
+      <li id="facilityContactLink" style="display:none;">
+          <a href="facility-contact.html"><span>اتصل بالمؤسسة</span><i class="fas fa-hospital"></i></a></li>
+      <li><a href="feedback.html"><span>إضافة تعليق</span><i class="fas fa-comment-dots"></i></a></li>
+      <li><a href="settings.html"><span>إعدادات الموقع</span><i class="fas fa-cogs"></i></a></li>
+      <li><a href="help.html"><span>المساعدة</span><i class="fas fa-question-circle"></i></a></li>
+  </ul>
+</div>
+    
+<!-- المحتوى الرئيسي -->
+<div class="main-container about-page">
+    <h2 class="about-title">
+      <i class="fas fa-info-circle"></i>
+      معلومات عنا
+    </h2>
+
+    <p class="about-paragraph">
+      مشفى رعاية تخصصي هو أحد أبرز المؤسسات الصحية في فلسطين، تأسس عام 2005 بهدف تقديم خدمات طبية متكاملة بمعايير عالمية.<br>
+      نحن نقدم خدماتنا من خلال فريق طبي متخصص وذو خبرة عالية، مجهزين بأحدث التقنيات الطبية.<br>
+      رؤيتنا هي أن نكون الخيار الأول للمرضى في مجال الرعاية الصحية في فلسطين.<br>
+      قيمنا: الجودة، النزاهة، التعاطف، الابتكار، والعمل الجماعي.
+    </p>
+
+    <div class="achievements-box">
+      <h3 class="achievements-title">
+        <i class="fas fa-award"></i> إنجازاتنا
+      </h3>
+      <ul class="achievements-list">
+        <li>- حصولنا على اعتماد الهيئة العامة للاعتماد والجودة عام 2018</li>
+        <li>- جائزة التميز في الخدمات الطبية لعام 2020</li>
+        <li>- الاعتماد الدولي كمركز تدريب طبي معتمد</li>
+      </ul>
+    </div>
+  </div>
+    
+      <!-- ملف JavaScript العام -->
+    <script src="script.js"></script>
+    <script src="darkMode.js"></script>
+    <script src="facilityVisibility.js" defer></script>
+</body>
+</html>

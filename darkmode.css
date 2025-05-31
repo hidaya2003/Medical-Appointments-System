@@ -1,0 +1,370 @@
+
+body.dark-mode {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+}
+body.dark-mode .medical-bg {
+    background: #1e1e1e; /* خلفية داكنة مناسبة */
+}
+
+body.dark-mode .bg-element {
+    opacity: 0.15; /* أقل لمعانًا */
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.1));
+}
+
+/* تغيير الألوان حسب الوضع الداكن */
+body.dark-mode .bg-element:nth-child(1) { color: #4dabf7; }
+body.dark-mode .bg-element:nth-child(2) { color: #69db7c; }
+body.dark-mode .bg-element:nth-child(3) { color: #f783ac; }
+body.dark-mode .bg-element:nth-child(4) { color: #b197fc; }
+body.dark-mode .bg-element:nth-child(5) { color: #ffc078; }
+body.dark-mode .bg-element:nth-child(6) { color: #66d9e8; }
+
+body.dark-mode .sidebar {
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .nav-links a {
+    color: #eee;
+}
+
+body.dark-mode .nav-links a:hover,
+body.dark-mode .nav-links a.active {
+    background-color: #373a4b;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+
+body.dark-mode .settings-section,
+body.dark-mode .contact-form,
+body.dark-mode .contact-info,
+body.dark-mode .comment-section,
+body.dark-mode .form-container,
+body.dark-mode .achievements-box {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+    box-shadow: 0 3px 15px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .welcome-text,
+body.dark-mode .submit-btn,
+body.dark-mode .auth-btn,
+body.dark-mode .buttons button,
+body.dark-mode button {
+    background-color: #2563eb;
+    color: white;
+}
+
+body.dark-mode .submit-btn:hover,
+body.dark-mode .auth-btn:hover,
+body.dark-mode .buttons button:hover,
+body.dark-mode button:hover {
+    background-color: #1e40af;
+}
+
+body.dark-mode .about-page,
+body.dark-mode .contact-page,
+body.dark-mode .comment-page,
+body.dark-mode .home-page {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+}
+
+body.dark-mode .about-page .about-title,
+body.dark-mode .contact-page .contact-info h2,
+body.dark-mode .comment-page .comment-title {
+    color: #2563eb;
+}
+
+
+body.dark-mode .contact-page .contact-info,
+body.dark-mode .comment-page .comment-section {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+    box-shadow: 0 3px 15px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .submit-btn,
+body.dark-mode .auth-btn,
+body.dark-mode .buttons button,
+body.dark-mode button {
+    background-color: #2563eb;
+    color: white;
+}
+
+body.dark-mode .submit-btn:hover,
+body.dark-mode .auth-btn:hover,
+body.dark-mode .buttons button:hover,
+body.dark-mode button:hover {
+    background-color: #1e40af;
+}
+
+
+body.dark-mode .nav-links a:hover,
+body.dark-mode .nav-links a.active {
+    background-color: #373a4b;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .sidebar ,
+body.dark-mode .main-content
+{
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode  .sidebar .nav-links a,
+body.dark-mode  .about-paragraph ,
+body.dark-mode  .achievements-box li,
+body.dark-mode  .nav-links a,
+body.dark-mode   .quote
+{
+    color: #eee;
+}
+
+body.dark-mode  .achievements-box{
+    background-color:#373a4b ;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .header,
+body.dark-mode .support-card {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+}
+
+/* النموذج */
+body.dark-mode .form-control {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+    border: 1px solid #444;
+}
+
+body.dark-mode .form-control::placeholder {
+    color: #aaa;
+}
+
+body.dark-mode .form-label {
+    color: #ddd;
+}
+
+/* زر الإرسال */
+body.dark-mode .btn {
+    background-color: #1971c2;
+    color: #fff;
+}
+
+body.dark-mode .btn:hover {
+    background-color: #1864ab;
+}
+
+/* تنبيه النجاح */
+body.dark-mode .alert-success {
+    background-color: #264d26;
+    color: #c3f3c3;
+    border-color: #3b823b;
+}
+
+/* بطاقات التواصل */
+body.dark-mode .contact-card {
+    background-color: #333;
+    color: #f1f1f1;
+    border: 1px solid #444;
+}
+
+/* أيقونات التواصل */
+body.dark-mode .contact-icon {
+    font-size: 2rem;
+}
+
+/* العناوين */
+body.dark-mode .section-title,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3 {
+    color: #f1f1f1;
+}
+
+/* الوضع الداكن */
+.dark-mode {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+/* تغيير خلفية الحقول داخل النموذج */
+body.dark-mode .form-group  input,
+body.dark-mode .form-group textarea, 
+body.dark-mode .form-group  select {
+    background-color: #1e1e1e;
+    color: white;
+    border: 1px solid #777;
+}
+
+/* تغيير لون النصوص داخل الحقول */
+body.dark-mode .form-group label {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+}
+/* تغيير خلفية زر الإرسال */
+.dark-mode .submit-btn {
+    background-color: #444;
+    color: #f1f1f1;
+}
+
+/* تغيير لون الروابط */
+.dark-mode a {
+    color: #66ccff;
+}
+
+/* تغيير الخلفية للنماذج بشكل عام */
+.dark-mode .auth-container {
+    background-color: #1e1e1e;
+    padding: 20px;
+}
+
+/* تغيير اللون داخل المربعات الخاصة بـ role-card */
+.dark-mode .role-card {
+    background-color: #262424;
+    color: #f1f1f1;
+}
+
+/* تغيير لون النصوص في الجداول أو عناصر أخرى */
+.dark-mode .role-title, 
+.dark-mode .role-desc {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+}
+
+body.dark-mode .auth-content,
+body.dark-mode .auth-tabs,
+body.dark-mode .form-group
+{
+    background-color:#1e1e1e ;
+    color: #f1f1f1;
+}
+
+
+body.dark-mode .auth-container input[type="text"],
+body.dark-mode .auth-container input[type="password"],
+body.dark-mode .auth-container input[type="tel"],
+body.dark-mode .auth-container input[type="email"],
+body.dark-mode .auth-container select,
+body.dark-mode .auth-container textarea {
+    background-color: #1e1e1e  !important; 
+    color: #f1f1f1 !important; 
+    border: 1px solid #666;
+    box-shadow: none !important; 
+    outline: none; 
+    appearance: none; 
+    -webkit-appearance: none; 
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode .auth-container input::placeholder,
+body.dark-mode .auth-container textarea::placeholder {
+    color: #ccc !important;
+}
+
+body.dark-mode select {
+    background-color: #1e1e1e !important;  
+    color: #f1f1f1!important;            
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 8px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+  }
+  
+  body.dark-mode option {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+  }
+  /* خلفية المحتوى الرئيسي */
+body.dark-mode .help-main-content {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+/* العنوان الرئيسي */
+body.dark-mode .help-title {
+    background-color: #1e1e1e;
+  color: #90cdf4 !important;
+}
+
+  
+  /* أقسام المساعدة */
+  body.dark-mode .help-section {
+    background-color: #2c2c2c;
+    color: #f1f1f1;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+  }
+  
+  /* عناوين الأقسام */
+  body.dark-mode .help-section-title {
+    color: #63b3ed;
+    border-bottom: 1px solid #444;
+    padding-bottom: 8px;
+  }
+  
+  /* الأسئلة الشائعة */
+  body.dark-mode .faq-box {
+    background-color: #1f1f1f;
+    border: 1px solid #444;
+    padding: 16px;
+    border-radius: 8px;
+    color: #e2e8f0;
+  }
+  
+  /* معلومات التواصل */
+  body.dark-mode .help-contact-method {
+    background-color: #1f1f1f;
+    border: 1px solid #444;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    color: #f1f1f1;
+  }
+  
+  /* أيقونات التواصل */
+  body.dark-mode .help-icon i {
+    font-size: 1.8rem;
+    color: #63b3ed;
+    margin-left: 12px;
+  }
+  
+  /* عناصر بارزة مثل أرقام الهواتف والبريد */
+  body.dark-mode .help-highlight {
+    color: #90cdf4;
+    font-weight: bold;
+  }
+  
+  /* الاختيارات */
+  body.dark-mode select,
+  body.dark-mode #facilitySelect {
+    background-color: #2f75e7 !important;
+    color: white !important;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 8px;
+    appearance: none;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  /* عناصر داخل select */
+  body.dark-mode option,
+  body.dark-mode #facilitySelect option {
+    background-color: #2f75e7;
+    color: #f1f1f1;
+  }
+  

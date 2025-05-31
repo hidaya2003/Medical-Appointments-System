@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar"  dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <title>المساعدة</title> 
+       
+        <!-- الخط المستخدم -->
+        <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    
+        <!-- رابط مكتبة Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">  
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="darkmode.css" /> 
+    <link rel="shortcut icon" href="icon-192.png" type="image/png">  
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-image" id="sidebar-image">
+            <img src="stethoscope-removebg-preview.png" alt="Doctor" />
+        </div>
+        <ul class="nav-links">
+          <li><a href="index.html" > <span> الرئيسية</span><i class="fas fa-home"></i></a></li>
+          <li id="aboutLink" style="display:none;">
+              <a href="about.html"><span>معلومات عنا</span><i class="fas fa-info-circle"></i></a></li>            
+          <li><a href="contact.html"><span>اتصل بنا</span><i class="fas fa-phone"></i></a></li>
+          <li id="facilityContactLink" style="display:none;">
+              <a href="facility-contact.html"><span>اتصل بالمؤسسة</span><i class="fas fa-hospital"></i></a></li>
+          <li><a href="feedback.html" ><span>إضافة تعليق</span><i class="fas fa-comment-dots"></i></a></li>
+          <li><a href="settings.html"><span>إعدادات الموقع</span><i class="fas fa-cogs"></i></a></li>
+          <li><a href="help.html" class="active"><span>المساعدة</span><i class="fas fa-question-circle"></i></a></li>
+      </ul>
+    </div>
+<!-- صفحة المساعدة -->
+<div class="help-main-content">
+    <h1 class="help-title"><i class="fas fa-question-circle"></i> صفحة المساعدة</h1>
+
+    <div class="help-section">
+        <h3 class="help-section-title"><i class="fas fa-question"></i> الأسئلة الشائعة</h3>
+
+        <div class="faq-box">
+            <p><strong>كيف يمكنني حجز موعد؟</strong></p>
+            <p>يمكنك حجز موعد من خلال قسم "حجز موعد" في التطبيق أو عن طريق الاتصال على رقم المشفى.</p>
+
+            <p><strong>ما هي ساعات العمل؟ </strong><br>
+                الأحد - الخميس: 8 صباحاً - 8 مساءً<br>
+                الجمعة: 10 صباحاً - 4 مساءً<br>
+                السبت: مغلق</p>
+
+            <p><strong>هل يوجد موقف سيارات؟</strong><br>
+                نعم، يوجد موقف سيارات خاص بالمشفى مجاني للمرضى.</p>
+
+            <p><strong>كيف يمكنني التواصل مع الطبيب؟</strong><br>
+                يمكنك التواصل مع الطبيب من خلال قسم "اتصل بنا" أو عن طريق حجز موعد استشارة.</p>
+        </div>
+    </div>
+
+    <div class="help-section">
+        <h3 class="help-section-title"> <i class="fas fa-headset"></i>  خدمة العملاء</h3>
+
+        <div class="help-contact-method">
+            <div class="help-icon">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <div class="help-details">
+              <h3>هاتف الدعم الفني</h3>
+              <p class="help-highlight">+970 2 295 5555</p>
+            </div>
+          </div>
+          
+          <div class="help-contact-method">
+            <div class="help-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="help-details">
+              <h3>البريد الإلكتروني</h3>
+              <p class="help-highlight">support@riaya-hospital.ps</p>
+            </div>
+          </div>
+          
+          <div class="help-contact-method">
+            <div class="help-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="help-details">
+              <h3>ساعات الدعم الفني</h3>
+              <p class="help-highlight">الأحد - الخميس: 8 صباحاً - 4 مساءً</p>
+            </div>
+          </div>          
+    <script src="script.js"></script>
+    <script src="darkMode.js"></script>
+    <script src="facilityVisibility.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تعديل الملف الشخصي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="users.css" />
+  <link rel="shortcut icon" href="icon-192.png" type="image/png">
+  <style>
+    .container {
+      max-width: 1200px;
+      padding: 20px;
+      margin-top: 40px;
+      margin-inline: auto;
+    }
+    .back-icon {
+        width: 50px;
+        height: 50px;
+        position: fixed;
+        top: 20px;
+        right:20px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: transform 0.3s ease-in-out;
+    }
+    /* تكبير الأيقونة عند تمرير الماوس فوقها */
+    .back-icon:hover {
+        transform: scale(1.2);
+    }
+
+    .profile-container {
+      background-color: #f7f7f7;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .profile-name {
+      color: #2563eb;
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+
+    .profile-details {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .detail-card {
+      background-color: #f7f7f7;
+      border-radius: 10px;
+      padding: 20px;
+      border-right: 5px solid #2563eb;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .detail-title {
+      color: #2563eb;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .detail-title i {
+      margin-left: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .save-btn {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background-color 0.3s;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .change-password-btn {
+      background-color: #4b5563;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background-color 0.3s;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .change-password-btn:hover {
+      background-color: #374151;
+    }
+
+    .save-btn:hover {
+      background-color: #1e40af;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin-right: 0;
+        padding: 15px;
+      }
+
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    .password-container {
+        position: relative;
+        margin-bottom: 15px;
+    }
+     
+    .password-title {
+        color: #4b5563;
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .password-title i {
+        margin-left: 10px;
+    }
+
+    .password-toggle {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #666;
+    }
+
+    .password-field {
+        padding-left: 40px !important;
+        width: calc(100% - 50px) !important;
+        background-color: white;
+    }
+    .password-section {
+        margin-top: 25px;
+        padding: 20px;
+        background-color: #f7f7f7;
+        border-radius: 10px;
+        border-right: 5px solid #4b5563;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <img src="arrow_forward_24dp_4B77D1_FILL0_wght400_GRAD0_opsz24.png" 
+  alt="رجوع" 
+  style="cursor: pointer; width: 40px;" 
+  onclick="goBack()"
+  class="back-icon">
+
+  <div class="container">
+    <div class="profile-container">
+      <div class="profile-header">
+        <h1 class="profile-name">تعديل الملف الشخصي</h1>
+      </div>
+
+      <form id="editProfileForm" class="profile-details">
+        <div class="detail-card">
+          <h2 class="detail-title"><i class="fas fa-user-cog"></i> معلومات الاتصال</h2>
+
+          <div class="form-group">
+            <label for="phone">رقم الهاتف:</label>
+            <input type="text" id="phone" name="phone">
+          </div>
+
+          <div class="form-group">
+            <label for="email">البريد الإلكتروني:</label>
+            <input type="email" id="email" name="email">
+          </div>
+
+          <div class="form-group">
+            <label for="city">المدينة:</label>
+            <select id="city" name="city" >
+              <option value="">اختر المدينة</option>
+              <option value="رام الله">رام الله</option>
+              <option value="نابلس">نابلس</option>
+              <option value="الخليل">الخليل</option>
+              <option value="جنين">جنين</option>
+              <option value="طولكرم">طولكرم</option>
+              <option value="قلقيلية">قلقيلية</option>
+              <option value="سلفيت">سلفيت</option>
+              <option value="بيت لحم">بيت لحم</option>
+              <option value="أريحا">أريحا</option>
+              <option value="طوباس">طوباس</option>
+              <option value="القدس">القدس</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="town">البلدة / القرية:</label>
+            <input type="text" id="town" name="town">
+          </div>
+
+          <h2 class="detail-title" style="margin-top: 25px;"><i class="fas fa-lock"></i> تغيير كلمة المرور</h2>
+
+          <div class="form-group">
+            <label for="currentPassword">كلمة المرور الحالية:</label>
+            <div class="password-container">
+                <i class="fas fa-eye password-toggle" onclick="togglePassword('currentPassword', this)"></i>
+                <input type="password" id="currentPassword" name="currentPassword" 
+                       placeholder="أدخل كلمة المرور الحالية" class="password-field">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="newPassword">كلمة المرور الجديدة:</label>
+            <div class="password-container">
+                <i class="fas fa-eye password-toggle" onclick="togglePassword('newPassword', this)"></i>
+                <input type="password" id="newPassword" name="newPassword" 
+                       placeholder="أدخل كلمة المرور الجديدة" class="password-field">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="confirmPassword">تأكيد كلمة المرور الجديدة:</label>
+            <div class="password-container">
+                <i class="fas fa-eye password-toggle" onclick="togglePassword('confirmPassword', this)"></i>
+                <input type="password" id="confirmPassword" name="confirmPassword" 
+                       placeholder="أعد إدخال كلمة المرور الجديدة" class="password-field">
+            </div>
+        </div>
+
+          <button type="button" class="change-password-btn" onclick="changePassword()">
+            <i class="fas fa-key"></i> تغيير كلمة المرور
+          </button>
+
+          <button type="submit" class="save-btn"><i class="fas fa-save"></i> حفظ التعديلات</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    function goBack() {
+                 window.location.href = "adm-profile.html";
+            }
+    </script>
+  <script>
+    console.log("adminId from localStorage:", localStorage.getItem("adminId"));
+
+function togglePassword(fieldId, icon) {
+    const passwordField = document.getElementById(fieldId);
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        passwordField.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
+  </script>
+
+  
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import {
+    getDatabase,
+    ref,
+    get,
+    update
+  } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCAU6wCvPQwaSBszgfD7PQMgxVw2CyZOK8",
+    authDomain: "app-appointment-a2793.firebaseapp.com",
+    databaseURL: "https://app-appointment-a2793-default-rtdb.firebaseio.com",
+    projectId: "app-appointment-a2793",
+    storageBucket: "app-appointment-a2793.appspot.com",
+    messagingSenderId: "1015962141540",
+    appId: "1:1015962141540:web:70f8a31f3a55e02179f071"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const adminId = localStorage.getItem("adminId");
+
+  if (!adminId) {
+    alert("لم يتم العثور على هوية الإدمن. يرجى تسجيل الدخول.");
+  } else {
+    const adminRef = ref(db, `users/admin/${adminId}`);
+    let originalData = {};
+
+    // جلب البيانات وملء الحقول
+    get(adminRef).then((snapshot) => {
+      if (snapshot.exists()) {
+        originalData = snapshot.val();
+        document.getElementById("phone").value = originalData.phone || "";
+        document.getElementById("email").value = originalData.email || "";
+        document.getElementById("city").value = originalData.city || "";
+        document.getElementById("town").value = originalData.town || "";
+      } else {
+        alert("لم يتم العثور على بيانات.");
+      }
+    }).catch((error) => {
+      console.error("خطأ في جلب البيانات:", error);
+    });
+
+    // حفظ التعديلات
+    document.getElementById("editProfileForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const phone = document.getElementById("phone").value;
+      const email = document.getElementById("email").value;
+      const city = document.getElementById("city").value;
+      const town = document.getElementById("town").value;
+
+      const updates = {};
+      if (phone !== originalData.phone) updates.phone = phone;
+      if (email !== originalData.email) updates.email = email;
+      if (city !== originalData.city) updates.city = city;
+      if (town !== originalData.town) updates.town = town;
+
+      if (Object.keys(updates).length === 0) {
+        alert("لم يتم تعديل أي بيانات.");
+        return;
+      }
+
+      update(adminRef, updates).then(() => {
+        alert("تم حفظ التعديلات بنجاح!");
+      }).catch((error) => {
+        console.error("فشل في حفظ التعديلات:", error);
+        alert("حدث خطأ أثناء الحفظ.");
+      });
+    });
+
+    // دالة تغيير كلمة المرور
+    window.changePassword = function () {
+      const currentPassword = document.getElementById("currentPassword").value.trim();
+      const newPassword = document.getElementById("newPassword").value.trim();
+      const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+      if (!currentPassword || !newPassword || !confirmPassword) {
+        alert("يرجى تعبئة جميع الحقول.");
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        alert("كلمة المرور الجديدة وتأكيدها غير متطابقتين.");
+        return;
+      }
+
+      if (currentPassword !== originalData.password) {
+        alert("كلمة المرور الحالية غير صحيحة.");
+        return;
+      }
+
+      if (currentPassword === newPassword) {
+        alert("كلمة المرور الجديدة يجب أن تكون مختلفة عن الحالية.");
+        return;
+      }
+
+      const updates = { password: newPassword };
+
+      update(adminRef, updates).then(() => {
+        alert("تم تغيير كلمة المرور بنجاح!");
+        document.getElementById("currentPassword").value = "";
+        document.getElementById("newPassword").value = "";
+        document.getElementById("confirmPassword").value = "";
+        originalData.password = newPassword; // لتحديث القيمة الحالية المخزنة
+      }).catch((error) => {
+        console.error("فشل في تغيير كلمة المرور:", error);
+        alert("حدث خطأ أثناء تغيير كلمة المرور.");
+      });
+    };
+  }
+</script>
+</body>
+</html>

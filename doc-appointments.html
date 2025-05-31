@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> مواعيد الطبيب</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="users.css" />
+  <link rel="shortcut icon" href="icon-192.png" type="image/png">
+  <!-- Firebase App (Core) -->
+  <script type="module" src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js"></script>
+  <!-- Firebase Realtime Database -->
+  <script type="module" src="https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js"></script>
+
+<style>
+/* كل التنسيقات تبعتك بدون أي تغيير */
+.appointments-page {
+  background-color: #f7f7f7;  
+  margin-right: 120px;
+  padding: 30px;
+  direction: rtl;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(13, 12, 12, 0.05);
+}
+
+.appointments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.appointments-header h1 {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+#filterSelect {
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  font-family: 'Tajawal', sans-serif;
+  background-color: #f7f7f7;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+#filterSelect:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(47, 117, 231, 0.2);
+}
+
+/* الجملة الجديدة */
+#filterMessage {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.appointments-container {
+  margin-top: 20px;
+  display: grid;
+  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.appointment-card {
+  background-color: #f9f9f9;
+  padding: 15px 20px;
+  border-right: 5px solid #3f51b5;
+  border-radius: 8px;
+  box-shadow: 0 0 5px #ccc;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.appointment-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.appointment-detail {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  color: #4b5563;
+}
+
+.appointment-detail i {
+  margin-left: 10px;
+  color: var(--primary-color);
+  width: 20px;
+  text-align: center;
+}
+
+.status {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.status.قادم {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.status.تم {
+  background-color: #e2e8f0;
+  color: #4b5563;
+}
+
+.status.ملغي {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.status.didNotAttend {
+  background-color: #ecc9fa;
+  color: #791f9d;
+}
+
+
+.no-appointments {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: #64748b;
+}
+
+.no-appointments i {
+  font-size: 3rem;
+  color: #cbd5e1;
+  margin-bottom: 20px;
+}
+
+.no-appointments p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* متجاوب */
+@media (max-width: 768px) {
+  .container {
+    margin-right: 0;
+    padding: 15px;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-radius: 0;
+    bottom: 0;
+    top: auto;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .appointments-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #filterSelect {
+    margin-top: 15px;
+    width: 100%;
+  }
+}
+
+.cancel-button {
+  background-color: #f35b5b; /* لون أحمر */
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin:5px;
+}
+
+.cancel-button:hover {
+    background-color: darkred;  /* تغيير اللون عند التمرير فوق الزر */
+}
+
+.cancel-btn i {
+  margin-left: 5px;
+  font-size: 0.8rem;
+}
+</style>
+</head>
+<body>
+  <nav class="sidebar">
+      <a href="index.html" class="nav-item">
+          <i class="fas fa-home"></i>
+          <span>الرئيسية</span>
+      </a>
+      <a href="doctor.html" class="nav-item" data-page="dashboard">
+        <i class="fas fa-user-md"></i>
+        <span>واجهة الطبيب</span>
+      </a>
+      <a href="doc-appointments.html" class="nav-item active" data-page="appointments">
+          <i class="fas fa-calendar-check"></i>
+          <span>المواعيد</span>
+      </a>
+      <a href="D.profile.html" class="nav-item" data-page="profile">
+          <i class="fas fa-user"></i>
+          <span>الملف الشخصي</span>
+      </a>
+      <a href="logout.html" class="nav-item" data-page="logout">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>تسجيل الخروج</span>
+      </a>
+  </nav>
+
+<div class="container">
+  <div class="appointments-page">
+      <div class="appointments-header">
+          <h1>مواعيدي</h1>
+          <select id="filterSelect" onchange="filterAppointments()">
+              <option value="today">اليوم</option>
+              <option value="week">هذا الأسبوع</option>
+              <option value="month">هذا الشهر</option>
+              <option value="past">المواعيد المنتهية</option>
+              <option value="all">الكل</option>
+          </select>
+      </div>
+
+      <div id="filterMessage"></div>
+
+      <div id="appointmentsContainer" class="appointments-container">
+          <!-- المواعيد تظهر هنا -->
+      </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js';
+  import { getDatabase, ref, get } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js';
+
+  // إعدادات Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCAU6wCvPQwaSBszgfD7PQMgxVw2CyZOK8",
+    authDomain: "app-appointment-a2793.firebaseapp.com",
+    databaseURL: "https://app-appointment-a2793-default-rtdb.firebaseio.com",
+    projectId: "app-appointment-a2793",
+    storageBucket: "app-appointment-a2793.appspot.com",
+    messagingSenderId: "1015962141540",
+    appId: "1:1015962141540:web:70f8a31f3a55e02179f071"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+
+  window.allAppointments = [];
+  window.filterAppointments = filterAppointments;
+
+  function updateFilterMessage(filter) {
+    const messageDiv = document.getElementById("filterMessage");
+    const messages = {
+      today: "مواعيد اليوم:",
+      week: "مواعيد هذا الأسبوع:",
+      month: "مواعيد هذا الشهر:",
+      all: "جميع المواعيد:",
+      past: "المواعيد المنتهية:"
+    };
+    messageDiv.textContent = messages[filter] || messages.all;
+  }
+
+  function formatDate(dateStr) {
+    const d = new Date(dateStr);
+    return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+  }
+
+  function getStatus(dateStr, time, status) {
+  if (status === "cancelled") return "ملغي";
+  if (status === "didNotAttend") return "لم يتم الحضور";
+  if (!time) return "غير معروف";
+
+  const now = new Date();
+  const appointmentDate = new Date(dateStr);
+
+  const match = time.match(/(\d+):(\d+)\s(.+)/);
+  if (!match) return "غير معروف";
+
+  const [hour, min, period] = match.slice(1);
+  let hours = parseInt(hour);
+  if (period === 'م' && hours !== 12) hours += 12;
+  if (period === 'ص' && hours === 12) hours = 0;
+  appointmentDate.setHours(hours, min);
+
+  return appointmentDate > now ? "قادم" : "تم";
+}
+
+
+  function isSameDay(d1, d2) {
+    return d1.getFullYear() === d2.getFullYear() &&
+           d1.getMonth() === d2.getMonth() &&
+           d1.getDate() === d2.getDate();
+  }
+
+  function filterAppointments() {
+  const filter = document.getElementById("filterSelect").value;
+  updateFilterMessage(filter);
+
+  const now = new Date();            
+  const today = new Date(now);         
+  today.setHours(0, 0, 0, 0);
+
+
+  const container = document.getElementById("appointmentsContainer");
+  container.innerHTML = "";
+
+  const filtered = window.allAppointments.filter(appt => {  
+  const apptDate = new Date(appt.date);
+  apptDate.setHours(0, 0, 0, 0);
+
+  if (filter !== "past" && appt.status !== "confirmed" && appt.status !== "didNotAttend") return false;
+
+  if (filter === "today") {
+    return isSameDay(apptDate, today);
+  } else if (filter === "week") {
+    const endOfWeek = new Date(today);
+    endOfWeek.setDate(today.getDate() + 7);
+    return apptDate >= today && apptDate <= endOfWeek;
+  } else if (filter === "month") {
+    return apptDate.getMonth() === today.getMonth() &&
+           apptDate.getFullYear() === today.getFullYear();
+  } else if (filter === "past") {
+    if (!appt.time) return false;
+
+    const appointmentDate = new Date(appt.date);
+    const match = appt.time.match(/(\d+):(\d+)\s(.+)/);
+    if (!match) return false;
+
+    const [hour, min, period] = match.slice(1);
+    let hours = parseInt(hour);
+    if (period === 'م' && hours !== 12) hours += 12;
+    if (period === 'ص' && hours === 12) hours = 0;
+    appointmentDate.setHours(hours, min);
+
+    return appointmentDate < now;
+  }
+
+  return true;
+}).sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="no-appointments">
+        <i class="far fa-calendar-times"></i>
+        <p>لا توجد مواعيد</p>
+      </div>
+    `;
+  } else {
+    filtered.forEach(appt => {
+      const status = getStatus(appt.date, appt.time, appt.status);
+      let statusClass = "تم";
+      if (status === "قادم") statusClass = "قادم";
+      if (status === "لم يتم الحضور") {
+  statusClass = "didNotAttend";
+}
+
+
+      container.innerHTML += `
+        <div class="appointment-card">
+          <h3>المريض: ${appt.patientName}</h3>
+          <div class="appointment-detail">
+            <i class="fas fa-calendar-alt"></i>
+            <span>${formatDate(appt.date)}</span>
+          </div>
+          <div class="appointment-detail">
+            <i class="fas fa-clock"></i>
+            <span>${appt.time}</span>
+          </div>
+          <div class="status ${statusClass}">${status}</div>
+        </div>
+      `;
+    });
+  }
+}
+
+  async function loadAppointments() {
+    const doctorData = JSON.parse(localStorage.getItem("doctorData") || "{}");
+    const doctorId = doctorData.nationalId;
+
+    if (!doctorId) {
+      showLoginMessage();
+      return;
+    }
+
+    const appointmentsRef = ref(database, `appointments/${doctorId}`);
+
+    try {
+      const snapshot = await get(appointmentsRef);
+      if (!snapshot.exists()) {
+        showNoAppointments();
+        return;
+      }
+
+      const allData = snapshot.val();
+      window.allAppointments = [];
+
+      for (const date in allData) {
+        const timeSlots = allData[date];
+        for (const time in timeSlots) {
+          const appt = timeSlots[time];
+
+          if (appt.status?.toLowerCase() === "cancelled") continue;
+
+          if (!appt.appointmentId) {
+            appt.appointmentId = `${doctorId}_${date}_${time}`;
+          }
+          window.allAppointments.push(appt);
+
+        }
+      }
+
+      filterAppointments();
+
+    } catch (error) {
+      console.error("خطأ في تحميل المواعيد:", error);
+      showError();
+    }
+  }
+
+  function showLoginMessage() {
+    const container = document.getElementById("appointmentsContainer");
+    container.innerHTML = `<p>الرجاء تسجيل الدخول لعرض المواعيد.</p>`;
+  }
+
+  function showNoAppointments() {
+    const container = document.getElementById("appointmentsContainer");
+    container.innerHTML = `
+      <div class="no-appointments">
+        <i class="far fa-calendar-times"></i>
+        <p>لا توجد مواعيد</p>
+      </div>
+    `;
+  }
+
+  function showError() {
+    const container = document.getElementById("appointmentsContainer");
+    container.innerHTML = `<p>حدث خطأ أثناء تحميل المواعيد.</p>`;
+  }
+
+  document.addEventListener("DOMContentLoaded", loadAppointments);
+</script>
+</body>
+</html>

@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>لوحة الموظف</title>
+  <link rel="shortcut icon" href="icon-192.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="stylesheet" href="users.css" />
+  <style>
+    .stf-dashboard {
+      margin-right: 110px;
+      padding: 30px;
+    }
+  
+    .filters-bar {
+  display: flex;
+  flex-direction: row; /* تأكد أنها صف */
+  flex-wrap: wrap; /* تسمح بالنزول إذا ضاق المكان */
+  gap: 20px;
+  background-color: #f8f9fa;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  align-items: center;
+  justify-content: flex-start; /* توجيه العناصر لبداية السطر */
+  width: 100%; /* خليه ياخذ كل عرض الحاوية */
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  
+    .filter-group label {
+      font-weight: bold;
+      color: #0d6efd;
+    }
+  
+    .filter-group select {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      color: #333;
+      font-size: 14px;
+    }
+  
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: #ddd;
+      padding: 10px;
+      border-radius: 20px;
+      position: relative;
+      width: 90%;
+      margin-right: 30px;
+    }
+  
+    .search-bar input {
+      border: none;
+      outline: none;
+      background: none;
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 20px;
+      text-align: center;
+      transition: text-align 0.3s ease-in-out;
+    }
+  
+    .search-bar .search-icon {
+      position: absolute;
+      left: 10px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+  
+    .search-bar .search-icon img {
+      width: 24px;
+      height: 24px;
+    }
+  
+    .search-bar input:focus {
+      text-align: right;
+    }
+  
+    .patients-section {
+      margin-top: 20px;
+    }
+  
+    .patient-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: white;
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+    }
+  
+    .patient-card:hover {
+      transform: scale(1.01);
+    }
+  
+    .patient-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.patient-info i {
+  color: #4361ee;
+  font-size: 1.4rem;
+}
+
+.patient-info h4 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.patient-id {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+
+.date-time {
+  font-size: 0.95rem;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.date-time strong {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.date-time i {
+  color: #95a5a6;
+  min-width: 16px;
+  text-align: center;
+}
+
+.appointment-meta {
+  display: flex;
+  gap: 12px;
+}
+  
+    .patient-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: #0d6efd;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  
+    .patient-details {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .patient-details h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #0d6efd;
+    }
+  
+    .patient-details p {
+      margin: 3px 0;
+      font-size: 14px;
+      color: #444;
+    }
+  
+    .btn-details {
+      background-color: #198754;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+  
+    .btn-details i {
+      font-size: 14px;
+    }
+  
+    .btn-details:hover {
+      background-color: #157347;
+    }
+  
+    .search-results {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+  
+    .search-result-card {
+      display: flex;
+      flex-direction: column;
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+      border-right: 10px solid transparent;
+    }
+  
+    .search-result-card:hover {
+      transform: scale(1.01);
+    }
+  
+    .search-result-card h4 {
+      margin: 0 0 10px;
+      color: #0d6efd;
+      font-size: 18px;
+    }
+  
+    .search-result-card p {
+      margin: 5px 0;
+      color: #333;
+      font-size: 14px;
+    }
+  
+    .search-result-card .status {
+      font-weight: bold;
+    }
+  
+    .search-result-card .confirm-btn {
+      background-color: #198754;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+      align-self: flex-start;
+    }
+  
+    .search-result-card .confirm-btn:hover {
+      background-color: #157347;
+    }
+  
+    .section-title {
+      margin-top: 40px;
+      color: #0d6efd;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  
+    .summary-card {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+  
+    .action-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+  
+    .action-box {
+      background-color: #f1f1f1;
+      border-radius: 12px;
+      padding: 20px;
+      flex: 1;
+      min-width: 300px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  
+    .action-box h3 {
+      color: #0d6efd;
+      margin-bottom: 15px;
+    }
+  
+    .action-box button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      background-color: #0d6efd;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  
+    .action-box button:hover {
+      background-color: #0b5ed7;
+    }
+  
+    /* شريط جانبي حسب الحالة */
+    .search-result-card.status-pending {
+      border-right-color: #ffc107;
+    }
+  
+    .search-result-card.status-confirmed {
+      border-right-color: #198754;
+    }
+  
+    .search-result-card.status-cancelled {
+      border-right-color: #dc3545;
+    }
+
+
+    .modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  direction: rtl; /* لدعم اللغة العربية */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  margin: 5% auto;
+  border-radius: 20px;
+  padding: 30px;
+  width: 90%;
+  max-width: 550px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  position: relative;
+  text-align: right;
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #2c3e50;
+  font-size: 24px;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content button {
+  width: 100%;
+  padding: 12px 14px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.modal-content input:focus,
+.modal-content select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+.modal-content button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #2980b9;
+}
+
+.close {
+  color: #bbb;
+  position: absolute;
+  right: 16px;
+  top: 10px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close:hover {
+  color: #333;
+}
+
+.toast-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99999;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+}
+
+.toast-message {
+  padding: 12px 20px;
+  margin-top: 10px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0.95;
+  transition: opacity 0.3s ease;
+}
+
+/* أنواع الرسائل */
+.toast-message.success {
+  background-color: #2ecc71;
+}
+
+.toast-message.error {
+  background-color: #e74c3c;
+}
+
+.toast-message.info {
+  background-color: #34495e;
+}
+
+/* عند الإخفاء */
+.toast-message.fade-out {
+  opacity: 0;
+}
+
+.appointment-card {
+  background: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 16px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.appointment-card::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background-color: inherit;
+}
+.appointment-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.appointment-meta {
+  display: flex;
+  gap: 12px;
+}
+
+.date-badge, .time-badge {
+  background: #f8f9fa;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #34495e;
+}
+
+.date-badge i, .time-badge i {
+  margin-left: 5px;
+  color: #7f8c8d;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background-color:#f7f7f7;
+}
+
+.doctor-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #2c3e50;
+  font-size: 0.95rem;
+}
+
+.doctor-info i {
+  color: #e74c3c;
+  font-size: 1.1rem;
+}
+
+.status-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.status-badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-badge i {
+  font-size: 0.6rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+button.confirm-btn, 
+button.cancel-btn, 
+button.missed-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+button.confirm-btn {
+  background-color: #2ecc71;
+  color: white;
+}
+
+button.cancel-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+button.missed-btn {
+  background-color: #9b59b6;
+  color: white;
+}
+
+button.confirm-btn:hover {
+  background-color: #27ae60;
+  transform: translateY(-2px);
+}
+
+button.cancel-btn:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+button.missed-btn:hover {
+  background-color: #8e44ad;
+  transform: translateY(-2px);
+}
+
+.appointment-time {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: left;
+}
+
+.date, .time {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.date i, .time i {
+  margin-left: 5px;
+  color: #95a5a6;
+}
+.sidebar .nav-item {
+        margin: 8px 10px; 
+        padding: 10px 4px; 
+        }
+  </style>
+</head>
+<body>
+    <!-- القائمة الجانبية -->
+    <nav class="sidebar">
+        <a href="index.html" class="nav-item">
+          <i class="fas fa-home"></i>
+          <span>الرئيسية</span>
+        </a>
+    
+        <a href="staff.html" class="nav-item active" data-page="dashboard">
+          <i class="fas fa-clipboard-list"></i>
+          <span>قسم التسجيل</span>
+        </a>
+    
+        <a href="statistics.html" class="nav-item" data-page="statistics">
+          <i class="fas fa-chart-bar"></i>
+          <span>الإحصائيات</span>
+        </a>
+        
+        <a href="make-appointment.html" class="nav-item" data-page="appointment">
+          <i class="fas fa-calendar-plus"></i>
+          <span>حجز موعد</span>
+        </a>
+        
+        <a href="stf.profile.html" class="nav-item" data-page="profile">
+          <i class="fas fa-user"></i>
+          <span>الملف الشخصي</span>
+        </a>
+    
+        <a href="logout.html" class="nav-item" data-page="logout">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>تسجيل الخروج</span>
+        </a>
+      </nav>
+    
+      <div class="stf-dashboard">
+        <div class="header">
+          <h1 class="welcome-message" id="welcomeName">أهلاً بك !</h1>
+          <p id="lastLogin">آخر دخول: ...</p>
+          <p>نتمنى لك يومًا مثمرًا</p>
+    
+        </div>
+
+        <div class="filters-bar">
+            <div class="filter-group">
+              <label for="statusFilter">الحالة:</label>
+              <select id="statusFilter">
+                <option value="all">كل الحالات</option>
+                <option value="pending">لم يتم التأكيد</option>
+                <option value="confirmed">مؤكد</option>
+                <option value="cancelled">ملغي</option>
+                <option value="didNotAttend">لم يتم الحضور</option>
+              </select>
+            </div>
+          
+            <div class="filter-group">
+              <label for="timeFilter">الفترة:</label>
+              <select id="timeFilter">
+                <option value="today">اليوم</option>
+                <option value="week">هذا الأسبوع</option>
+                <option value="month">هذا الشهر</option>
+                <option value="all">الكل</option>
+              </select>
+            </div>
+          
+            <div class="filter-group">
+              <label for="doctorFilter">الطبيب:</label>
+              <select id="doctorFilter">
+                <option value="all">الكل</option>
+                <!-- تضاف أسماء الأطباء ديناميكيًا هنا -->
+              </select>
+            </div>
+          </div>
+          
+          
+          <!-- شريط البحث -->
+<div class="search-bar">
+    <div class="search-icon">
+      <img src="search_24dp_4B77D1_FILL0_wght400_GRAD0_opsz24.png" alt="بحث">
+    </div>
+    <input type="text" id="searchInput" placeholder="بحث بالاسم أو رقم الهوية..." oninput="searchPatient()">
+  </div>
+
+ 
+  
+  <!-- مكان لعرض نتائج البحث -->
+  <div id="searchResult" style="margin-top: 15px;"></div>
+
+
+        <!-- نتائج البحث -->
+  <div id="searchResults" class="search-results" style="display:none;"></div>
+<!-- أزرار الإجراءات -->
+<div class="action-section">
+  <div class="action-box">
+    <h3>إضافة جديد</h3>
+    <button onclick="openModal('addPatientModal')">➕ إضافة مريض</button>
+  </div>
+  <div class="action-box">
+    <h3>حذف مستخدم</h3>
+    <button onclick="openModal('deletePatientModal')">❌ حذف مريض</button>
+  </div>
+</div>
+
+<!-- نافذة منبثقة: إضافة مريض -->
+<div id="addPatientModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('addPatientModal')">&times;</span>
+    <h2>إضافة مريض جديد</h2>
+    <form id="addPatientForm">
+      <input type="text" placeholder="الاسم" name="name" required>
+      <input type="text" placeholder="رقم الهوية" name="nationalId" required>
+      <input type="text" placeholder="رقم الهاتف" name="phone" required>
+      
+      <label>تاريخ الميلاد:</label>
+      <input type="date" name="dob" required>
+
+      <label>الجنس:</label>
+      <select name="gender" required>
+        <option value="">اختر الجنس</option>
+        <option value="ذكر">ذكر</option>
+        <option value="أنثى">أنثى</option>
+      </select>
+
+      <label>فصيلة الدم:</label>
+      <select name="bloodType" required>
+        <option value="">اختر فصيلة الدم</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+      </select>
+
+      <input type="email" placeholder="البريد الإلكتروني (اختياري)" name="email">
+
+      <button type="submit">إنشاء حساب</button>
+    </form>
+  </div>
+</div>
+
+
+<!-- نافذة منبثقة: حذف مريض -->
+<div id="deletePatientModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('deletePatientModal')">&times;</span>
+    <h2>حذف مريض</h2>
+    <form id="deletePatientForm">
+      <input type="text" placeholder="رقم الهوية للمريض" name="nationalId" required>
+      <button type="submit">حذف الحساب</button>
+    </form>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div id="toastContainer" class="toast-container"></div>
+
+      
+  <!-- Firebase App (Core) -->
+<script type="module" src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js"></script>
+  <!-- Firebase Realtime Database -->
+<script type="module" src="https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js"></script>
+ <script type="module">
+          import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js';
+          import { getDatabase, ref, get, update,set,remove } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js';
+        
+          // Firebase config
+          const firebaseConfig = {
+            apiKey: "AIzaSyCAU6wCvPQwaSBszgfD7PQMgxVw2CyZOK8",
+            authDomain: "app-appointment-a2793.firebaseapp.com",
+            databaseURL: "https://app-appointment-a2793-default-rtdb.firebaseio.com",
+            projectId: "app-appointment-a2793",
+            storageBucket: "app-appointment-a2793.appspot.com",
+            messagingSenderId: "1015962141540",
+            appId: "1:1015962141540:web:70f8a31f3a55e02179f071"
+          };
+        
+          // Initialize Firebase
+          const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// عرض اسم الموظف وتاريخ الدخول
+const staffName = localStorage.getItem('staffName') || 'موظف';
+const lastLogin = localStorage.getItem('lastLogin') || 'غير متوفر';
+document.getElementById('welcomeName').textContent = `أهلاً بك ${staffName} !`;
+document.getElementById('lastLogin').textContent = `آخر دخول: ${lastLogin.replace(' ', ' - ')}`;
+
+// تحميل قائمة الأطباء
+async function loadDoctors() {
+  const doctorFilter = document.getElementById('doctorFilter');
+  const doctorsRef = ref(db, 'users/doctor');
+
+  try {
+    const snapshot = await get(doctorsRef);
+    if (snapshot.exists()) {
+      const doctors = snapshot.val();
+      for (const nationalId in doctors) {
+        const doctor = doctors[nationalId];
+
+        const option = document.createElement('option');
+        option.value = nationalId; 
+        option.textContent = `${doctor.name} - ${doctor.specialization || ''}`;
+        doctorFilter.appendChild(option);
+      }
+    }
+  } catch (error) {
+    console.error("فشل تحميل قائمة الأطباء:", error);
+  }
+}
+loadDoctors();
+
+// ترجمة حالة الموعد
+function translateStatus(status) {
+  switch (status) {
+    case 'pending': return 'لم يتم التأكيد';
+    case 'confirmed': return 'مؤكد';
+    case 'cancelled': return 'ملغي';
+    case 'didNotAttend': return 'لم يتم الحضور';
+    default: return 'غير معروف';
+  }
+}
+
+// تأكيد موعد
+async function confirmAppointment(nationalId, appointmentKey, appointmentData) {
+  const { doctorId, date, time } = appointmentData;
+  const appointmentId = `${doctorId}_${date}_${time.replace(":", "-")}`;
+  const createdAt = new Date().toISOString();
+
+  const realNationalId = appointmentData.nationalId || appointmentData.patientId;
+
+  const fullAppointmentData = {
+    appointmentId,
+    createdAt,
+    date,
+    time,
+    status: "confirmed",
+    doctorId,
+    doctorName: appointmentData.doctorName || "",
+    doctorSpecialization: appointmentData.doctorSpecialization || "",
+    nationalId: realNationalId,
+    patientName: appointmentData.patientName || "",
+  };
+
+  const updates = {
+    [`patientAppointments/${realNationalId}/${appointmentKey}`]: fullAppointmentData,
+    [`appointments/${doctorId}/${date}/${time}`]: fullAppointmentData,
+    [`appointmentsPending/${doctorId}/${date}/${time}`]: null
+  };
+
+  try {
+    await update(ref(db), updates);
+    alert('تم تأكيد الموعد.');
+    filterAppointments();
+  } catch (error) {
+    console.error('خطأ في التأكيد:', error);
+  }
+}
+
+// إلغاء موعد
+async function cancelAppointment(nationalId, appointmentKey, appointmentData) {
+  const { doctorId, date, time } = appointmentData;
+  const appointmentId = `${doctorId}_${date}_${time.replace(":", "-")}`;
+  const createdAt = new Date().toISOString();
+
+  const realNationalId = appointmentData.nationalId || appointmentData.patientId;
+
+  const cancelledAppointment = {
+    appointmentId,
+    createdAt,
+    date,
+    time,
+    status: "cancelled",
+    doctorId,
+    doctorName: appointmentData.doctorName || "",
+    doctorSpecialization: appointmentData.doctorSpecialization || "",
+    nationalId: realNationalId,
+    patientName: appointmentData.patientName || "",
+  };
+
+  const updates = {
+    [`patientAppointments/${realNationalId}/${appointmentKey}/status`]: 'cancelled',
+    [`appointmentsCancelled/${doctorId}/${date}/${time}`]: cancelledAppointment,
+    [`appointmentsPending/${doctorId}/${date}/${time}`]: null
+  };
+
+  try {
+    await update(ref(db), updates);
+    alert('تم إلغاء الموعد.');
+    filterAppointments();
+  } catch (error) {
+    console.error('خطأ في الإلغاء:', error);
+  }
+}
+
+function convertTo24Hour(timeString) {
+  timeString = timeString.trim().replace(/\s+/g, ' ');
+  const parts = timeString.split(' ');
+  if (parts.length < 2) return null;
+  let [hour, minute] = parts[0].split(":").map(Number);
+  const period = parts[1];
+  if (period === "م" && hour < 12) hour += 12;
+  if (period === "ص" && hour === 12) hour = 0;
+  return `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
+}
+
+
+async function markDidNotAttend(nationalId, appointmentKey, appointmentData, date, time, doctorId) {
+  const time24 = convertTo24Hour(time);
+  const appointmentDateTime = new Date(`${date}T${time24}:00`);
+  const now = new Date();
+   
+  if (isNaN(appointmentDateTime)) {
+  console.error("❌ تاريخ الموعد غير صالح:", `${date}T${time24}:00`);
+  alert("خطأ: تاريخ الموعد غير صالح. يرجى التحقق من الوقت.");
+  return;
+}
+
+  appointmentDateTime.setSeconds(0, 0);
+  now.setSeconds(0, 0);
+
+  if (now < appointmentDateTime) {
+    alert("لا يمكن نقل الموعد لحالة 'لم يتم الحضور' قبل موعده.");
+    return;
+  }
+
+  const appointmentId = `${doctorId}_${date}_${time.replace(":", "-")}`;
+  const realNationalId = appointmentData.nationalId || appointmentData.patientId;
+
+  const didNotAttendData = {
+    appointmentId,
+    date,
+    time,
+    status: "didNotAttend",
+    doctorId,
+    doctorName: appointmentData.doctorName || "",
+    doctorSpecialization: appointmentData.doctorSpecialization || "",
+    nationalId: realNationalId,
+    patientName: appointmentData.patientName || "",
+  };
+
+  const updates = {
+    [`patientAppointments/${realNationalId}/${appointmentKey}/status`]: 'didNotAttend',
+    [`appointmentsMissed/${doctorId}/${date}/${time}`]: didNotAttendData,
+    [`appointments/${doctorId}/${date}/${time}/status`]: 'didNotAttend' 
+  };
+
+  try {
+    await update(ref(db), updates);
+    alert("تم نقل الموعد إلى حالة 'لم يتم الحضور'.");
+    filterAppointments();
+  } catch (error) {
+    console.error("خطأ أثناء نقل الموعد:", error);
+  }
+}
+
+// إعداد عناصر البحث والنتائج
+const searchInput = document.getElementById('searchInput');
+const statusFilter = document.getElementById('statusFilter');
+const doctorFilter = document.getElementById('doctorFilter');
+const resultsContainer = document.createElement('div');
+
+resultsContainer.style.marginTop = '20px';
+resultsContainer.style.background = '#f9f9f9';
+resultsContainer.style.padding = '10px';
+resultsContainer.style.borderRadius = '10px';
+resultsContainer.style.maxHeight = '250px';
+resultsContainer.style.overflowY = 'auto';
+
+searchInput.parentElement.insertAdjacentElement('afterend', resultsContainer);
+        
+// دالة التصفية والبحث
+async function filterAppointments() {
+  const query = searchInput.value.trim().toLowerCase();
+  const selectedStatus = statusFilter.value;
+  const selectedDoctor = doctorFilter.value;
+  const selectedTime = timeFilter.value;
+
+  resultsContainer.innerHTML = '';
+  const now = new Date();
+
+  function isInSelectedRange(dateStr) {
+    const date = new Date(dateStr);
+    const today = new Date();
+    if (selectedTime === 'today') return date.toDateString() === today.toDateString();
+    else if (selectedTime === 'week') {
+      const startOfWeek = new Date(today);
+      startOfWeek.setDate(today.getDate() - today.getDay());
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      return date >= startOfWeek && date <= endOfWeek;
+    } else if (selectedTime === 'month') {
+      return date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth();
+    } else return true;
+  }
+
+  const [confirmedSnap, pendingSnap, cancelledSnap, missedSnap] = await Promise.all([
+    get(ref(db, 'appointments')),
+    get(ref(db, 'appointmentsPending')),
+    get(ref(db, 'appointmentsCancelled')),
+    get(ref(db, 'appointmentsMissed'))
+  ]);
+
+  const appointments = confirmedSnap.exists() ? confirmedSnap.val() : {};
+  const pendingAppointments = pendingSnap.exists() ? pendingSnap.val() : {};
+  const cancelledAppointments = cancelledSnap.exists() ? cancelledSnap.val() : {};
+  const missedAppointments = missedSnap.exists() ? missedSnap.val() : {};
+
+  const allAppointments = [];
+
+  // المؤكدة
+  for (const doctorId in appointments) {
+    for (const date in appointments[doctorId]) {
+      if (!isInSelectedRange(date)) continue;
+      for (const time in appointments[doctorId][date]) {
+        const appt = appointments[doctorId][date][time];
+        appt.doctorId = doctorId;
+        appt.date = date;
+        appt.time = time;
+        appt.status = 'confirmed';
+        allAppointments.push(appt);
+      }
+    }
+  }
+
+  // قيد الانتظار
+  for (const doctorId in pendingAppointments) {
+    for (const date in pendingAppointments[doctorId]) {
+      if (!isInSelectedRange(date)) continue;
+      for (const time in pendingAppointments[doctorId][date]) {
+        const appt = pendingAppointments[doctorId][date][time];
+        appt.doctorId = doctorId;
+        appt.date = date;
+        appt.time = time;
+        appt.status = 'pending';
+        allAppointments.push(appt);
+      }
+    }
+  }
+
+  // الملغية
+  for (const doctorId in cancelledAppointments) {
+    for (const date in cancelledAppointments[doctorId]) {
+      if (!isInSelectedRange(date)) continue;
+      for (const time in cancelledAppointments[doctorId][date]) {
+        const appt = cancelledAppointments[doctorId][date][time];
+        appt.doctorId = doctorId;
+        appt.date = date;
+        appt.time = time;
+        appt.status = 'cancelled';
+        allAppointments.push(appt);
+      }
+    }
+  }
+
+  // لم يتم الحضور
+  for (const doctorId in missedAppointments) {
+    for (const date in missedAppointments[doctorId]) {
+      if (!isInSelectedRange(date)) continue;
+      for (const time in missedAppointments[doctorId][date]) {
+        const appt = missedAppointments[doctorId][date][time];
+        appt.doctorId = doctorId;
+        appt.date = date;
+        appt.time = time;
+        appt.status = 'didNotAttend';
+        allAppointments.push(appt);
+      }
+    }
+  }
+
+  // عرض النتائج
+  let found = false;
+  let count = 0;
+  const displayed = new Set();
+
+  allAppointments.sort((a, b) => {
+    const dateA = new Date(`${a.date}T${a.time}`);
+    const dateB = new Date(`${b.date}T${b.time}`);
+    return dateA - dateB;
+  });
+
+  for (const appt of allAppointments) {
+    const doctorSnapshot = await get(ref(db, `users/doctor/${appt.doctorId}`));
+    let doctorName = 'دكتور غير معروف';
+    let specialization = '';
+
+    if (doctorSnapshot.exists()) {
+      const doctorData = doctorSnapshot.val();
+      doctorName = doctorData.name || doctorName;
+      specialization = doctorData.specialization || '';
+    }
+
+    const name = (appt.patientName || '').toLowerCase();
+    const id = (appt.nationalId || appt.patientId || '').toLowerCase();
+    const status = appt.status || 'غير محدد';
+    const uniqueKey = `${appt.nationalId || appt.patientId}_${appt.doctorId}_${appt.date}_${appt.time}`;
+
+    const matchesSearch = query === '' || name.includes(query) || id.includes(query) || doctorName.toLowerCase().includes(query);
+    const translatedStatus = translateStatus(status);
+    const matchesStatus = selectedStatus === 'all' || status === selectedStatus;
+    const matchesDoctor = selectedDoctor === 'all' || appt.doctorId === selectedDoctor;
+
+    if (matchesSearch && matchesStatus && matchesDoctor && !displayed.has(uniqueKey)) {
+      displayed.add(uniqueKey);
+
+      const card = document.createElement('div');
+      card.className = 'search-result-card';
+
+      const statusColor = status === 'confirmed' ? '#198754' :
+                          status === 'cancelled' ? '#dc3545' :
+                          status === 'pending' ? '#ffc107' :
+                          status === 'didNotAttend' ? '#9b59b6' :
+                          '#6c757d';
+
+      card.style.borderRightColor = statusColor;
+      card.innerHTML = `
+  <div class="appointment-card" style="border-right: 4px solid ${statusColor}">
+    <div class="card-header">
+      <div class="patient-info">
+        <i class="fas fa-user-injured"></i>
+        <div>
+          <h4>${appt.patientName} <span class="patient-id">(${appt.nationalId || appt.patientId})</span></h4>
+        </div>
+      </div>
+      <div class="appointment-time">
+        <span class="date-time">
+          <i class="far fa-calendar-alt"></i> 
+          <strong>${appt.date}</strong> | 
+          <i class="far fa-clock"></i> 
+          <strong>${appt.time}</strong>
+        </span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="doctor-info">
+        <i class="fas fa-user-md"></i>
+        <span>${doctorName}${specialization ? ' - ' + specialization : ''}</span>
+      </div>
+      <div class="status-actions">
+        <span class="status-badge" style="color: ${statusColor}">
+          <i class="fas fa-circle"></i>
+          ${translatedStatus}
+        </span>
+        ${status === 'pending' ? `
+          <div class="action-buttons">
+            <button class="confirm-btn" 
+              data-patient-id="${appt.nationalId || appt.patientId}"
+              data-appointment-id="${appt.appointmentId || `${appt.doctorId}_${appt.date}_${appt.time.replace(":", "-")}`}">
+              <i class="fas fa-check"></i> تأكيد
+            </button>
+            <button class="cancel-btn"
+              data-patient-id="${appt.nationalId || appt.patientId}"
+              data-appointment-id="${appt.appointmentId || `${appt.doctorId}_${appt.date}_${appt.time.replace(":", "-")}`}">
+              <i class="fas fa-times"></i> إلغاء
+            </button>
+          </div>
+        ` : status === 'confirmed' ? `
+          <button class="missed-btn"
+            data-patient-id="${appt.nationalId || appt.patientId}"
+            data-appointment-id="${appt.appointmentId || `${appt.doctorId}_${appt.date}_${appt.time.replace(":", "-")}`}"
+            data-doctor-id="${appt.doctorId}"
+            data-date="${appt.date}"
+            data-time="${appt.time}">
+            <i class="fas fa-user-slash"></i> لم يحضر
+          </button>
+        ` : ''}
+      </div>
+    </div>
+  </div>
+`;
+      resultsContainer.appendChild(card);
+      found = true;
+      count++;
+      if (count >= 50) return;
+    }
+  }
+
+  if (!found) {
+    resultsContainer.innerHTML = '<p>لا يوجد نتائج حسب البحث والفلاتر المحددة.</p>';
+  }
+
+  //  إضافة الأحداث لأزرار التأكيد
+resultsContainer.querySelectorAll(".confirm-btn").forEach(btn => {
+  btn.addEventListener("click", async () => {
+    const nationalId = btn.getAttribute("data-patient-id");
+    const appointmentId = btn.getAttribute("data-appointment-id");
+
+    const [doctorId, date, timeRaw] = appointmentId.split('_');
+    const time = timeRaw.replace('-', ':');
+
+    const snapshot = await get(ref(db, `appointmentsPending/${doctorId}/${date}/${time}`));
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      await confirmAppointment(nationalId, appointmentId, data);
+    }
+  });
+});
+
+//  إضافة الأحداث لأزرار الإلغاء
+resultsContainer.querySelectorAll(".cancel-btn").forEach(btn => {
+  btn.addEventListener("click", async () => {
+    const nationalId = btn.getAttribute("data-patient-id");
+    const appointmentId = btn.getAttribute("data-appointment-id");
+
+    const [doctorId, date, timeRaw] = appointmentId.split('_');
+    const time = timeRaw.replace('-', ':');
+
+    const snapshot = await get(ref(db, `appointmentsPending/${doctorId}/${date}/${time}`));
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      await cancelAppointment(nationalId, appointmentId, data);
+    }
+  });
+});
+
+//  إضافة الأحداث لأزرار "لم يتم الحضور"
+resultsContainer.querySelectorAll(".missed-btn").forEach(btn => {
+  btn.addEventListener("click", async () => {
+    const nationalId = btn.getAttribute("data-patient-id");
+    const appointmentId = btn.getAttribute("data-appointment-id");
+    const doctorId = btn.getAttribute("data-doctor-id");
+    const date = btn.getAttribute("data-date");
+    const time = btn.getAttribute("data-time");
+
+    const snapshot = await get(ref(db, `appointments/${doctorId}/${date}/${time}`));
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      await markDidNotAttend(nationalId, appointmentId, data, date, time, doctorId);
+    }
+  });
+});
+
+}
+        
+          // الأحداث
+          searchInput.addEventListener('input', filterAppointments);
+          statusFilter.addEventListener('change', filterAppointments);
+          document.getElementById('timeFilter').addEventListener('change', filterAppointments);
+          doctorFilter.addEventListener('change', filterAppointments);
+
+  window.openModal = (id) => {
+    document.getElementById(id).style.display = 'block';
+  }
+
+  window.closeModal = (id) => {
+    document.getElementById(id).style.display = 'none';
+  }
+
+// إضافة مريض
+document.getElementById("addPatientForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData.entries());
+  const nationalId = data.nationalId;
+  const staffId = localStorage.getItem("staffId"); 
+
+  const userRef = ref(db, `users/patient/${nationalId}`);
+  get(userRef).then(snapshot => {
+    if (snapshot.exists()) {
+      showToast("يوجد مريض بنفس الرقم الوطني!", "error");
+    } else {
+      set(userRef, {
+        name: data.name,
+        nationalId: data.nationalId,
+        password: "az123",
+        phone: data.phone,
+        email: data.email || "",
+        dob: data.dob,
+        gender: data.gender,
+        bloodType: data.bloodType,
+        role: "patient",
+        employeeId: "",
+        addedBy: staffId || "" 
+      }).then(() => {
+        showToast("تمت إضافة المريض بنجاح", "success");
+        closeModal('addPatientModal');
+        this.reset();
+      }).catch(() => {
+        showToast("حدث خطأ أثناء الإضافة", "error");
+      });
+    }
+  }).catch(() => {
+    showToast("حدث خطأ أثناء التحقق من وجود المريض", "error");
+  });
+});
+
+
+// حذف مريض
+document.getElementById("deletePatientForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const nationalId = new FormData(this).get("nationalId");
+  const staffId = localStorage.getItem("staffId");
+
+  if (confirm("هل أنت متأكد أنك تريد حذف هذا المريض وكل مواعيده؟")) {
+    deletePatientAndAppointments(nationalId, staffId).then(() => {
+      showToast("تم حذف المريض ومواعيده بنجاح", "success");
+      closeModal('deletePatientModal');
+      this.reset();
+    }).catch((err) => {
+      console.error(err);
+      showToast(err.message || "حدث خطأ أثناء الحذف", "error");
+    });
+  }
+});
+
+//دالة الحذف 
+async function deletePatientAndAppointments(nationalId, deletedById) {
+  const patientRef = ref(db, `users/patient/${nationalId}`);
+  const appointmentsRef = ref(db, `patientAppointments/${nationalId}`);
+
+  const patientSnap = await get(patientRef);
+  if (!patientSnap.exists()) {
+    throw new Error("المريض غير موجود");
+  }
+
+  const patientData = patientSnap.val();
+
+  // تخزين في مسار deletedUsers/patient/{id}
+  await set(ref(db, `deletedUsers/patient/${nationalId}`), {
+    ...patientData,
+    deletedBy: deletedById || "unknown",
+    deletedAt: new Date().toISOString()
+  });
+
+  // حذف من users
+  await remove(patientRef);
+
+  // حذف المواعيد من المسارات
+  const snapshot = await get(appointmentsRef);
+  if (snapshot.exists()) {
+    const appointments = snapshot.val();
+    for (const appointmentKey in appointments) {
+      const appt = appointments[appointmentKey];
+      const { doctorId, date, time, status } = appt;
+
+      if (status === "confirmed") {
+        await remove(ref(db, `appointments/${doctorId}/${date}/${time}`));
+      } else if (status === "pending") {
+        await remove(ref(db, `appointmentsPending/${doctorId}/${date}/${time}`));
+      } else if (status === "cancelled") {
+        await remove(ref(db, `appointmentsCancelled/${doctorId}/${date}/${time}`));
+      }
+    }
+
+    await remove(appointmentsRef);
+  }
+}
+
+
+// التوست كما هو
+function showToast(message, type = "success") {
+  const toast = document.createElement("div");
+  toast.className = `toast-message ${type}`;
+  toast.textContent = message;
+
+  document.getElementById("toastContainer").appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add("fade-out");
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+</script>                                               
+</body>
+</html>

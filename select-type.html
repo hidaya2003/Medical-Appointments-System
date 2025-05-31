@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>اختيار المنشأة</title>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      direction: rtl;
+    }
+    .container {
+      text-align: center;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 400px;
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+    select {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+    }
+    button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #2980b9;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>اختر المنشأة التي تعمل بها</h1>
+    <select id="facilitySelect">
+      <optgroup label="العيادات">
+        <option value="clinic-elite">عيادة النخبة الطبية</option>
+        <option value="clinic-quds">عيادة القدس التخصصية</option>
+      </optgroup>
+      <optgroup label="المستشفيات">
+        <option value="hospital-rai3a">مستشفى رعاية التخصصي – رام الله</option>
+        <option value="hospital-shifa">مستشفى الشفاء العام</option>
+      </optgroup>
+    </select>
+    <button onclick="saveFacility()">التالي</button>
+  </div>
+
+  <script>
+    function saveFacility() {
+      const selectedValue = document.getElementById('facilitySelect').value;
+      localStorage.setItem('facilitySelected', selectedValue);
+      window.location.href = 'index.html'; // تابع الصفحة الرئيسية أو صفحة تسجيل الدخول
+    }
+  </script>
+
+</body>
+</html>

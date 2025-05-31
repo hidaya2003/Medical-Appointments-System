@@ -1,0 +1,75 @@
+Folder PATH listing
+Volume serial number is A468-B064
+C:.
+³   about.html
+³   add-user.png
+³   add.png
+³   adm-profile.html
+³   admin.html
+³   app.js
+³   appointments-admin.html
+³   appointments.html
+³   arrow.png
+³   arrow_forward_24dp_4B77D1_FILL0_wght400_GRAD0_opsz24.png
+³   arrow_forward_24dp_4B77D1_FILL0_wght400_GRAD0_opsz24.png.png
+³   booking.html
+³   calendar.png
+³   comment.png
+³   contact.html
+³   D.profile.html
+³   darkmode.css
+³   darkMode.js
+³   doc-appointments.html
+³   doc-logout.html
+³   doctor .png
+³   doctor.html
+³   edit-adm-prof.html
+³   edit-profile-doctor.html
+³   edit-profile.html
+³   edit-stf-profile.html
+³   facility-contact.html
+³   feedback.html
+³   firebase.json
+³   help.html
+³   icon-192.png
+³   icon-512.png
+³   index.html
+³   info.png
+³   location1.png
+³   login.html
+³   logout.html
+³   make-appointment.html
+³   manifest.json
+³   offline.html
+³   OIP.jpg
+³   online-appointment.png
+³   orthopedics.png
+³   patient.html
+³   permissions.html
+³   person.png
+³   phone.png
+³   profile.html
+³   report.png
+³   script.js
+³   search_24dp_4B77D1_FILL0_wght400_GRAD0_opsz24.png
+³   select-type.html
+³   service-worker.js
+³   settings.html
+³   signup.html
+³   staff.html
+³   statistics.html
+³   stethoscope-removebg-preview.png
+³   stethoscope.png
+³   stf.profile.html
+³   stomach.png
+³   structure.txt
+³   styles.css
+³   tooth.png
+³   users.css
+³   
+ÃÄÄÄ.firebase
+³       hosting..cache
+³       
+ÀÄÄÄ.vscode
+        launch.json
+        
